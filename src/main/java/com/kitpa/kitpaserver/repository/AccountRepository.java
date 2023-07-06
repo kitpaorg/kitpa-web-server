@@ -1,5 +1,6 @@
-package com.kitpa.kitpaserver.entity;
+package com.kitpa.kitpaserver.repository;
 
+import com.kitpa.kitpaserver.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

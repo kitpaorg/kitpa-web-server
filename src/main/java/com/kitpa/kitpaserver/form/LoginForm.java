@@ -1,4 +1,4 @@
-package com.kitpa.kitpaserver.login;
+package com.kitpa.kitpaserver.form;
 
 import lombok.Data;
 

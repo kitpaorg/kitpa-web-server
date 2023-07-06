@@ -1,15 +1,13 @@
-package com.kitpa.kitpaserver;
+package com.kitpa.kitpaserver.security;
 
 import com.kitpa.kitpaserver.entity.Account;
-import com.kitpa.kitpaserver.entity.AccountRepository;
+import com.kitpa.kitpaserver.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

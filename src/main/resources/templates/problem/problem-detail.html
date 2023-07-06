@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>문제 상세 보기</title>
+</head>
+<body>
+    <h1>문제 상세 보기</h1>
+    <div>
+        <h3>id</h3>
+        <p th:text="${problem.id}"></p>
+    </div>
+    <div>
+        <h3>title</h3>
+        <p th:text="${problem.title}"></p>
+    </div>
+    <div>
+        <h3>score</h3>
+        <p th:text="${problem.score}"></p>
+    </div>
+    <div>
+        <h3>type</h3>
+        <p th:text="${problem.type}"></p>
+    </div>
+    <div>
+        <h3>answer</h3>
+        <p th:text="${problem.answer}"></p>
+    </div>
+    <div>
+        <h3>content</h3>
+        <p th:text="${problem.content}"></p>
+    </div>
+</body>
+</html>

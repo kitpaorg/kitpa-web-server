@@ -1,10 +1,11 @@
-package com.kitpa.kitpaserver.login;
+package com.kitpa.kitpaserver.service;
 
+import com.kitpa.kitpaserver.dto.AccountDto;
 import com.kitpa.kitpaserver.entity.Account;
-import com.kitpa.kitpaserver.entity.AccountRepository;
-import com.kitpa.kitpaserver.entity.PasswordGenerator;
-import com.kitpa.kitpaserver.mail.IMailService;
-import com.kitpa.kitpaserver.mail.MailMessage;
+import com.kitpa.kitpaserver.repository.AccountRepository;
+import com.kitpa.kitpaserver.form.LoginForm;
+import com.kitpa.kitpaserver.service.mail.IMailService;
+import com.kitpa.kitpaserver.service.mail.MailMessage;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;

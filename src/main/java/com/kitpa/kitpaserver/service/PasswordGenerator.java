@@ -1,4 +1,4 @@
-package com.kitpa.kitpaserver.entity;
+package com.kitpa.kitpaserver.service;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.CharacterPredicates;

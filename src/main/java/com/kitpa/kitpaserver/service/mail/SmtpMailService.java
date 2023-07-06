@@ -1,4 +1,4 @@
-package com.kitpa.kitpaserver.mail;
+package com.kitpa.kitpaserver.service.mail;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class EmailServiceI implements IMailService {
+public class SmtpMailService implements IMailService {
     private final JavaMailSender javaMailSender;
     @Override
     public String sendMail(MailMessage e) {

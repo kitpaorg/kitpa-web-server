@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>문제 등록</title>
+</head>
+<body>
+    <h1>문제 등록 페이지</h1>
+    <form th:action="@{/problems/register}" th:object="${problem}" th:method="POST">
+        <div>
+            <label th:for="title">문제 제목</label>
+            <input th:field="*{title}" type="text">
+        </div>
+        <div>
+            <label th:for="score">문제 점수</label>
+            <input th:field="*{score}" type="text">
+        </div>
+        <div>
+            <label th:for="type">문제 형식</label>
+            <input th:field="*{type}" type="text">
+        </div>
+        <div>
+            <label th:for="answer">문제 답</label>
+            <input th:field="*{answer}" type="text">
+        </div>
+        <div>
+            <label th:for="content">문제 본문</label>
+            <input th:field="*{content}" type="text">
+        </div>
+        <button type="submit">등록</button>
+    </form>
+</body>
+</html>

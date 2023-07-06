@@ -1,4 +1,4 @@
-package com.kitpa.kitpaserver.mail;
+package com.kitpa.kitpaserver.service.mail;
 
 
 public interface IMailService {
