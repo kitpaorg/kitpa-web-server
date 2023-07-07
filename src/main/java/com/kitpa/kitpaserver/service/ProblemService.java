@@ -38,4 +38,10 @@ public class ProblemService {
         return repository.findPageBy(pageRequest)
                 .map(p -> mapper.map(p, ProblemDto.class));
     }
+
+    public ProblemDto getProblem(Long id) {
+        Problem problem = repository.findById(id)
+                .orElseThrow(NotFoundException::new);
+        return mapper.map(problem, ProblemDto.class);
+    }
 }

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>시험 상세 보기</title>
+</head>
+<body>
+<h1>시험 상세 보기</h1>
+<div>
+    <div>
+        <h3>id</h3>
+        <p th:text="${exam.id}"></p>
+    </div>
+    <div>
+        <h3>startDate</h3>
+        <p th:text="${#dates.format(exam.startDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+    </div>
+    <div>
+        <h3>score</h3>
+        <p th:text="${#dates.format(exam.endDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+    </div>
+    <div>
+        <h3>solve due</h3>
+        <p th:text="${exam.examSolveDue}"></p>
+    </div>
+</div>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>score</th>
+            <th>type</th>
+            <th>answer</th>
+            <th>content</th>
+        </tr>
+        </thead>
+        <tr th:each="problem, idx : ${exam.problemDtos}">
+            <td>
+                <p th:text="${problem.id}"></p></td>
+
+            <td>
+                <p th:text="${problem.title}"></p></td>
+            <td>
+                <p th:text="${problem.score}"></p></td>
+            <td>
+                <p th:text="${problem.type}"></p></td>
+            <td>
+                <p th:text="${problem.answer}"></p></td>
+            <td>
+                <p th:text="${problem.content}"></p></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

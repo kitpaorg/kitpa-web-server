@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.kitpa.kitpaserver.utils.PagingUtils.injectPaging;
+
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/problems")
@@ -31,14 +33,15 @@ public class ProblemController {
         Page<ProblemDto> problemDtoPage = problemService.getPagedProblems(page - 1, size);
         model.addAttribute("problems", problemDtoPage);
 
-        int totalPages = problemDtoPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
+        injectPaging(model, problemDtoPage);
         return "problem/problem-list";
+    }
+
+    @GetMapping("/{id}/detail")
+    public String detailView(@PathVariable Long id, Model model) {
+        ProblemDto problemDto = problemService.getProblem(id);
+        model.addAttribute("problem", problemDto);
+        return "problem/problem-detail";
     }
 
     @GetMapping("/register")
@@ -47,11 +50,11 @@ public class ProblemController {
         return "problem/problem-register";
     }
 
+
     @PostMapping("/register")
-    public String problemRegister(@ModelAttribute ProblemForm form, Model model) {
+    public String problemRegister(@ModelAttribute ProblemForm form) {
         ProblemDto problemDto = problemService.registerProblem(form);
-        model.addAttribute("problem", problemDto);
-        return "problem/problem-detail";
+        return "redirect:/problems/" + problemDto.getId() + "/detail";
     }
 
     @PostMapping("/{id}/delete")

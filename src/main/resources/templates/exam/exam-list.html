@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>시험 목록</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>startDate</th>
+        <th>endDate</th>
+        <th>solve due</th>
+    </tr>
+    </thead>
+    <tr th:each="exam, idx : ${exams}">
+        <td>
+            <p th:text="${exam.id}"></p></td>
+        <td>
+            <p th:text="${exam.startDate}"></p></td>
+        <td>
+            <p th:text="${exam.endDate}"></p></td>
+        <td>
+            <p th:text="${exam.examSolveDue}"></p></td>
+    </tr>
+</table>
+<div th:if="${exams.totalPages > 0}" class="pagination"
+     th:each="pageNumber : ${pageNumbers}">
+    <a th:href="@{/exams/list(size=${exams.size}, page=${pageNumber})}"
+       th:text="${pageNumber}"
+       th:class="${pageNumber==exams.number + 1} ? active"></a>
+</div>
+</body>
+</html>

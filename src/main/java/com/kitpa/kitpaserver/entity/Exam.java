@@ -21,9 +21,21 @@ public class Exam extends BaseTimeEntity {
     private Long id;
     @OneToMany
     private List<Problem> problems = new ArrayList<>();
-    @OneToMany
-    private List<ProblemResult> problemResults = new ArrayList<>();
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private LocalDateTime examSolveDue;
+
+    public static Exam create(LocalDateTime startDate,
+                              LocalDateTime endDate,
+                              LocalDateTime examSolveDue,
+                              List<Problem> problems) {
+        Exam exam = new Exam();
+        if(problems != null && !problems.isEmpty()){
+            exam.problems = problems;
+        }
+        exam.startDate = startDate;
+        exam.endDate = endDate;
+        exam.examSolveDue = examSolveDue;
+        return exam;
+    }
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>시험 등록</title>
+</head>
+<body>
+    <h1>시험 등록 페이지</h1>
+    <form th:action="@{/exams/register}" th:object="${exam}" th:method="POST">
+        <div>
+            <label th:for="startDate">시험 접수 시작일</label>
+            <input th:field="*{startDate}" type="text">
+        </div>
+        <div>
+            <label th:for="endDate">시험 접수 종료일</label>
+            <input th:field="*{endDate}" type="text">
+        </div>
+        <div>
+            <label th:for="examSolveDue">시험 시간</label>
+            <input th:field="*{examSolveDue}" type="text">
+        </div>
+        <button type="submit">등록</button>
+    </form>
+    <!--js 로 problem 조작해서 넘겨야함
+        선택 목록에 대해서 보여주고, 목록 x 누르면 포함 안되도록,
+        검색 되면 좋고 아니면 빼고
+      -->
+</body>
+</html>
