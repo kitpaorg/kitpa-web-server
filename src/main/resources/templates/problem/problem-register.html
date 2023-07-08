@@ -17,7 +17,12 @@
         </div>
         <div>
             <label th:for="type">문제 형식</label>
-            <input th:field="*{type}" type="text">
+            <select th:field="*{type}" id="mySelect" name="mySelect">
+                <option value="MULTIPLE">객관식</option>
+                <option value="SHORT">단답형</option>
+                <option value="BLANK">빈칸채우기</option>
+                <option value="CODE">코드작성</option>
+            </select>
         </div>
         <div>
             <label th:for="answer">문제 답</label>

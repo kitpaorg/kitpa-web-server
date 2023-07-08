@@ -12,19 +12,24 @@
         <p th:text="${exam.id}"></p>
     </div>
     <div>
+        <h3>receiptStartDate</h3>
+        <p th:text="${#temporals.format(exam.receiptStartDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+    </div>
+    <div>
+        <h3>receiptEndDate</h3>
+        <p th:text="${#temporals.format(exam.receiptEndDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+    </div>
+    <div>
         <h3>startDate</h3>
-        <p th:text="${#dates.format(exam.startDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+        <p th:text="${#temporals.format(exam.startDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
     </div>
     <div>
         <h3>score</h3>
-        <p th:text="${#dates.format(exam.endDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
-    </div>
-    <div>
-        <h3>solve due</h3>
-        <p th:text="${exam.examSolveDue}"></p>
+        <p th:text="${#temporals.format(exam.endDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
     </div>
 </div>
 <div>
+    <h2>포함 문제 목록</h2>
     <table>
         <thead>
         <tr>
@@ -36,7 +41,7 @@
             <th>content</th>
         </tr>
         </thead>
-        <tr th:each="problem, idx : ${exam.problemDtos}">
+        <tr th:each="problem, idx : ${exam.problems}">
             <td>
                 <p th:text="${problem.id}"></p></td>
 
@@ -53,5 +58,6 @@
         </tr>
     </table>
 </div>
+<a th:href="@{/exams/list}">시험 목록</a>
 </body>
 </html>

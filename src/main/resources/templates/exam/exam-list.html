@@ -5,13 +5,14 @@
     <title>시험 목록</title>
 </head>
 <body>
+<a th:href="@{/exams/register}">시험 등록</a>
 <table>
     <thead>
     <tr>
         <th>id</th>
         <th>startDate</th>
         <th>endDate</th>
-        <th>solve due</th>
+        <th>solveDue</th>
     </tr>
     </thead>
     <tr th:each="exam, idx : ${exams}">

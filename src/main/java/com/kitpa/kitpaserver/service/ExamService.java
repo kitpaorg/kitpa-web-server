@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -46,9 +45,10 @@ public class ExamService {
                     .findByIdIn(form.getProblemIds());
         }
         return Exam.create(
+                form.getReceiptStartDate(),
+                form.getReceiptEndDate(),
                 form.getStartDate(),
                 form.getEndDate(),
-                form.getExamSolveDue(),
                 problems);
     }
 
