@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+          integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <title>계정 관리</title>
+</head>
+<body>
+<form id="form-config" th:object="${account}" th:action="@{/accounts/config}" method="POST">
+  <div>
+    <label for="email">이메일</label>
+    <h5 id="email" th:text="*{email}"></h5>
+  </div>
+  <div>
+    <label for="origin-password">기존 비밀번호</label>
+    <input id="origin-password" name="originPass" type="password">
+  </div>
+  <div>
+    <label for="input-new-pass">새 비밀번호</label>
+    <input id="input-new-pass" name="newPass" type="password">
+  </div>
+  <div>
+    <label for="input-new-pass-re">새 비밀번호 재입력</label>
+    <input id="input-new-pass-re" name="newPassRe" type="password">
+  </div>
+  <div>
+    <label th:for="phoneNumber">휴대폰번호</label>
+    <input th:field="*{phoneNumber}" type="text">
+  </div>
+  <button id="btn-change" type="button">변경</button>
+</form>
+<script type="text/javascript">
+  $("#btn-change").click(function(event){
+    event.preventDefault();
+    event.stopPropagation();
+
+    const newPass = $("#input-new-pass").val();
+    const newPassRe = $("#input-new-pass-re").val();
+
+    if(!newPass){
+      if(newPass !== newPassRe){
+        window.alert("새 비밀번호 재입력이 새 비밀번호와 다릅니다.");
+        return;
+      }
+    }
+
+    $("#form-config").submit();
+  })
+</script>
+</body>
+</html>

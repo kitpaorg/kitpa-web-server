@@ -31,4 +31,8 @@ public class Account extends BaseTimeEntity{
         return account;
     }
 
+    public void updatePassword(String hashedNewPass) {
+        this.password = hashedNewPass;
+    }
+
 }

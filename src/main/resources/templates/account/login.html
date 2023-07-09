@@ -5,7 +5,7 @@
     <title>로그인</title>
 </head>
 <body>
-<form th:action="@{/account/login}" method="POST">
+<form th:action="@{/accounts/login}" method="POST">
     <div>
         <label for="username">이메일</label>
         <input id="username" name="username" type="email">
@@ -16,6 +16,6 @@
     </div>
     <button type="submit">전송</button>
 </form>
-<a th:href="@{/account/register}">회원가입</a>
+<a th:href="@{/accounts/register}">회원가입</a>
 </body>
 </html>

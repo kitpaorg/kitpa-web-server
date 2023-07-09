@@ -8,6 +8,5 @@ public class AccountDto {
     private String email;
     private String realName;
     private String username;
-    private String password;
     private String phoneNumber;
 }

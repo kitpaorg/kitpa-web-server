@@ -8,15 +8,12 @@ import com.kitpa.kitpaserver.exception.AlreadyExistsException;
 import com.kitpa.kitpaserver.exception.InvalidException;
 import com.kitpa.kitpaserver.exception.NotFoundException;
 import com.kitpa.kitpaserver.repository.AccountExamRepository;
-import com.kitpa.kitpaserver.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 
 @Service
@@ -32,7 +29,7 @@ public class ReceiptService {
     }
 
     public void receiptExam(String email, Long examId) {
-        Account account = accountLookupService.getAccountByEmail(email);
+        Account account = accountLookupService.getAccountEntityByEmail(email);
         Exam exam = examService.getExamEntity(examId);
 
         if (accountExamRepository.existsByAccountAndExam(account, exam)) {
@@ -45,7 +42,7 @@ public class ReceiptService {
 
     public Page<ExamDto> getReceiptCanCancellation(Integer page, Integer size, String email) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Account account = accountLookupService.getAccountByEmail(email);
+        Account account = accountLookupService.getAccountEntityByEmail(email);
         return accountExamRepository.findByCanCancellation(pageRequest, account)
                 .map(AccountExam::getExam)
                 .map(e -> mapper.map(e, ExamDto.class));
@@ -53,7 +50,7 @@ public class ReceiptService {
 
     @Transactional
     public void cancellationExam(String email, Long examId) {
-        Account account = accountLookupService.getAccountByEmail(email);
+        Account account = accountLookupService.getAccountEntityByEmail(email);
         Exam examEntity = examService.getExamEntity(examId);
         AccountExam accountExam = accountExamRepository
                 .findByAccountAndExam(account, examEntity)
