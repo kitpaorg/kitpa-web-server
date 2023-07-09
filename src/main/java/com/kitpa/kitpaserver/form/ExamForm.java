@@ -9,6 +9,7 @@ import java.util.List;
 
 @Data
 public class ExamForm {
+    private String title;
     private List<Long> problemIds = new ArrayList<>();
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime receiptStartDate;

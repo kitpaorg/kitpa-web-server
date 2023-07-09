@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .antMatchers("/h2-console/**")
                 .permitAll()
 
-                .antMatchers("/account/login/**", "/account/register")
+                .antMatchers("/","/account/login/**", "/account/register")
                 .permitAll()
 
                 .anyRequest()
@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .and()
                 .formLogin()
                 .loginPage("/account/login")
-                .defaultSuccessUrl("/main", true)
+                .defaultSuccessUrl("/", true)
                 .failureUrl("/login?error=true")
 
                 .and()

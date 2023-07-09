@@ -12,6 +12,10 @@
         <p th:text="${exam.id}"></p>
     </div>
     <div>
+        <h3>title</h3>
+        <p th:text="${exam.title}"></p>
+    </div>
+    <div>
         <h3>receiptStartDate</h3>
         <p th:text="${#temporals.format(exam.receiptStartDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
     </div>
@@ -24,7 +28,7 @@
         <p th:text="${#temporals.format(exam.startDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
     </div>
     <div>
-        <h3>score</h3>
+        <h3>endDate</h3>
         <p th:text="${#temporals.format(exam.endDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
     </div>
 </div>
@@ -34,6 +38,7 @@
         <thead>
         <tr>
             <th>id</th>
+            <th>problemNumber</th>
             <th>title</th>
             <th>score</th>
             <th>type</th>
@@ -43,18 +48,26 @@
         </thead>
         <tr th:each="problem, idx : ${exam.problems}">
             <td>
-                <p th:text="${problem.id}"></p></td>
-
+                <p th:text="${problem.id}"></p>
+            </td>
             <td>
-                <p th:text="${problem.title}"></p></td>
+                <p th:text="${problem.problemNumber}"></p>
+            </td>
             <td>
-                <p th:text="${problem.score}"></p></td>
+                <p th:text="${problem.title}"></p>
+            </td>
             <td>
-                <p th:text="${problem.type}"></p></td>
+                <p th:text="${problem.score}"></p>
+            </td>
             <td>
-                <p th:text="${problem.answer}"></p></td>
+                <p th:text="${problem.type}"></p>
+            </td>
             <td>
-                <p th:text="${problem.content}"></p></td>
+                <p th:text="${problem.answer}"></p>
+            </td>
+            <td>
+                <p th:text="${problem.content}"></p>
+            </td>
         </tr>
     </table>
 </div>

@@ -10,20 +10,33 @@
     <thead>
     <tr>
         <th>id</th>
+        <th>title</th>
+        <th>receiptStartDate</th>
+        <th>receiptEndDate</th>
         <th>startDate</th>
         <th>endDate</th>
-        <th>solveDue</th>
     </tr>
     </thead>
     <tr th:each="exam, idx : ${exams}">
         <td>
-            <p th:text="${exam.id}"></p></td>
+            <p th:text="${exam.id}"></p>
+        </td>
         <td>
-            <p th:text="${exam.startDate}"></p></td>
+            <p th:text="${exam.title}"></p>
+        </td>
         <td>
-            <p th:text="${exam.endDate}"></p></td>
+            <p th:text="${#temporals.format(exam.receiptStartDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+        </td>
         <td>
-            <p th:text="${exam.examSolveDue}"></p></td>
+            <p th:text="${#temporals.format(exam.receiptEndDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+        </td>
+        <td>
+            <p th:text="${#temporals.format(exam.startDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+        </td>
+        <td>
+            <p th:text="${#temporals.format(exam.endDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+        </td>
+        <td>
     </tr>
 </table>
 <div th:if="${exams.totalPages > 0}" class="pagination"

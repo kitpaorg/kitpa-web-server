@@ -20,7 +20,7 @@ public class ProblemService {
 
     @Transactional
     public ProblemDto registerProblem(ProblemForm form) {
-        Problem problem = mapper.map(form, Problem.class);
+        Problem problem = form.toEntity();
         Problem save = repository.save(problem);
         return mapper.map(save, ProblemDto.class);
     }

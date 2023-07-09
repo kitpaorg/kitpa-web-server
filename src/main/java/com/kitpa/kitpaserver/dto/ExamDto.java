@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 public class ExamDto {
     private Long id;
+    private String title;
     private List<ProblemDto> problems = new ArrayList<>();
     private LocalDateTime receiptStartDate;
     private LocalDateTime receiptEndDate;

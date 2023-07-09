@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class ProblemDto {
     private Long id;
+    private Integer problemNumber;
     private String title;
     private Integer score;
     private Integer solveScore;

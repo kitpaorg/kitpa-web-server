@@ -26,7 +26,7 @@ public class ExamController {
     public String examListView(@RequestParam(required = false, defaultValue = "1") Integer page,
                                @RequestParam(required = false, defaultValue = "10") Integer size,
                                Model model) {
-        Page<ExamDto> pagedExam = examService.getPagedExam(page, size);
+        Page<ExamDto> pagedExam = examService.getPagedExam(page - 1, size);
         model.addAttribute("exams", pagedExam);
         injectPaging(model, pagedExam);
         return "exam/exam-list";

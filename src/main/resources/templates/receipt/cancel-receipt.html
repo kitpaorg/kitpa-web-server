@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <title>시험 접수 취소</title>
+</head>
+<body>
+<h2>접수 취소 가능 목록</h2>
+<a th:href="@{/receipts/list}">시험 접수</a>
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>title</th>
+        <th>receiptStartDate</th>
+        <th>receiptEndDate</th>
+        <th>startDate</th>
+        <th>endDate</th>
+    </tr>
+    </thead>
+    <tr th:each="exam, idx : ${exams}">
+        <td>
+            <p th:text="${exam.id}"></p>
+        </td>
+        <td>
+            <p th:text="${exam.title}"></p>
+        </td>
+        <td>
+            <p th:text="${#temporals.format(exam.receiptStartDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+        </td>
+        <td>
+            <p th:text="${#temporals.format(exam.receiptEndDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+        </td>
+        <td>
+            <p th:text="${#temporals.format(exam.startDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+        </td>
+        <td>
+            <p th:text="${#temporals.format(exam.endDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+        </td>
+        <td>
+            <button th:data-exam-id="${exam.id}" name="btn-cancel" type="button">접수 취소</button>
+        </td>
+    </tr>
+</table>
+<div th:if="${exams.totalPages > 0}" class="pagination"
+     th:each="pageNumber : ${pageNumbers}">
+    <a th:href="@{/receipts/cancel(size=${exams.size}, page=${pageNumber})}"
+       th:text="${pageNumber}"
+       th:class="${pageNumber==exams.number + 1} ? active"></a>
+</div>
+<script th:inline="javascript" type="text/javascript">
+    $(function () {
+        let csrfToken = /*[[${_csrf.token}]]*/ null;
+        let csrfHeader = /*[[${_csrf.headerName}]]*/ null;
+        $(document).ajaxSend(function (e, xhr, options) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        });
+    });
+    $("button[name=btn-cancel]").click(function (event) {
+        let examId = event.currentTarget.getAttribute("data-exam-id");
+        const url = /*[[@{/receipts/cancel}]]*/ '/receipts/cancel';
+        $.ajax({
+            url: url,
+            dataType: "json",
+            contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+            type: "post",
+            data: {examId: examId},
+            success: function (r) {
+                window.location.href =/*[[@{/receipts/cancel}]]*/ '/receipts/cancel';
+            },
+            error: function (e) {
+                console.log("error")
+            }
+        });
+    })
+</script>
+</body>
+</html>

@@ -10,6 +10,7 @@
     <thead>
     <tr>
         <th>id</th>
+        <th>problemNumber</th>
         <th>title</th>
         <th>score</th>
         <th>type</th>
@@ -19,18 +20,26 @@
     </thead>
     <tr th:each="problem, idx : ${problems}">
         <td>
-            <p th:text="${problem.id}"></p></td>
-
+            <p th:text="${problem.id}"></p>
+        </td>
         <td>
-            <p th:text="${problem.title}"></p></td>
+            <p th:text="${problem.problemNumber}"></p>
+        </td>
         <td>
-            <p th:text="${problem.score}"></p></td>
+            <p th:text="${problem.title}"></p>
+        </td>
         <td>
-            <p th:text="${problem.type}"></p></td>
+            <p th:text="${problem.score}"></p>
+        </td>
         <td>
-            <p th:text="${problem.answer}"></p></td>
+            <p th:text="${problem.type}"></p>
+        </td>
         <td>
-            <p th:text="${problem.content}"></p></td>
+            <p th:text="${problem.answer}"></p>
+        </td>
+        <td>
+            <p th:text="${problem.content}"></p>
+        </td>
     </tr>
 </table>
 <div th:if="${problems.totalPages > 0}" class="pagination"

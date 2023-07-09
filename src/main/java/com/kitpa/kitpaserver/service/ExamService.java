@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -45,6 +46,7 @@ public class ExamService {
                     .findByIdIn(form.getProblemIds());
         }
         return Exam.create(
+                form.getTitle(),
                 form.getReceiptStartDate(),
                 form.getReceiptEndDate(),
                 form.getStartDate(),
@@ -69,5 +71,16 @@ public class ExamService {
         return examRepository.findWithRelationById(id)
                 .map(this::mapToExamDto)
                 .orElseThrow(NotFoundException::new);
+    }
+
+    public Exam getExamEntity(Long id) {
+        return examRepository.findWithRelationById(id)
+                .orElseThrow(NotFoundException::new);
+    }
+
+    public Page<ExamDto> getPagedExamWhenCanReceipt(Integer page, Integer size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return examRepository.findPageByCanReceipt(pageRequest, LocalDateTime.now())
+                .map(this::mapToExamDto);
     }
 }
