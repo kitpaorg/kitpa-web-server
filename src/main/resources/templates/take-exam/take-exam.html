@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>시험 응시</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+<div>
+    <h1>문제 정보</h1>
+    <h3>문제 아이디</h3>
+    <p th:text="${problem.id}"></p>
+    <h3>문제 번호</h3>
+    <p th:text="${problem.problemNumber}"></p>
+    <h3>문제 점수</h3>
+    <p th:text="${problem.maxScore}"></p>
+    <h3>문제 제목</h3>
+    <p th:text="${problem.title}"></p>
+    <h3>문제 타입</h3>
+    <p th:text="${problem.type}"></p>
+    <h3>문제 내용</h3>
+    <div style="border:2px solid black">
+        <div id="content"></div>
+    </div>
+</div>
+
+<div>
+    <h2>문제 번호 목록</h2>
+    <div style="display:inline-block" th:each="oneProblemNumer : ${problemNumberList}">
+        <a th:href="@{/take/exam(problemNumber=${oneProblemNumer})}"><span
+                th:text="|${oneProblemNumer}&nbsp|"></span></a>
+    </div>
+</div>
+<div>
+    <h2>남은 시간</h2>
+    <h3 id="time-remaining"></h3>
+</div>
+<form id="form" th:action="@{/take/exam}" method="post">
+    <div th:if="${problem.type.name() != 'CODE'}">
+        <h2>답 입력</h2>
+        <input th:id="answer" name="answer" type="text">
+    </div>
+
+    <div th:if="${problem.type.name() == 'CODE'}">
+        <h2>코드 입력</h2>
+        <input th:id="answer" name="answer" type="text">
+        <button type="button">컴파일</button>
+        <!--    TODO: 코드 컴파일 외부 api 호출 구현 필요    -->
+        <h2>컴파일 결과</h2>
+        <textarea readonly></textarea>
+    </div>
+</form>
+<div th:if="${!isFirst}">
+    <button id="prev">이전 문제로</button>
+</div>
+<div>
+    <h2>현재 문제 번호</h2>
+    <p th:text="${problem.problemNumber}"></p>
+</div>
+<div th:if="${!isLast}">
+    <button id="next">다음 문제로</button>
+</div>
+
+<script th:inline="javascript">
+    $(document).ready(()=>{
+        $("#prev, #next").click((event)=>{
+            const id = event.target.id;
+            let form = $("#form")
+            form.append($("<input/>", {type:"hidden", name:"problemNumber", value: /*[[${problem.problemNumber}]]*/""}));
+            form.append($("<input/>", {type:"hidden", name:"direction", value: id}));
+            form.submit();
+        })
+    })
+    //남은 시간
+    let endDateStr = /*[[${#temporals.format(endDate,'yyyy-MM-dd HH:mm:ss')}]]*/"";
+    let endDate = new Date(endDateStr);
+    let now = new Date();
+
+    let gap = endDate.getTime() - now.getTime();
+
+    setInterval(() => {
+        let calc = gap;
+
+        let h = Math.ceil(calc / (1000 * 60 * 60))
+        calc = calc % (1000 * 60 * 60);
+
+        let m = Math.ceil(calc / (1000 * 60));
+        calc = calc % (1000 * 60);
+
+        let s = Math.ceil(calc / (1000));
+
+        $("#time-remaining").text(`${h}:${m}:${s - 1}`)
+        gap = gap - 1000;
+    }, 1000)
+
+    //문제 내용
+    document.getElementById('content').innerHTML =
+        marked.parse(/*[[${problem.content}]]*/"");
+</script>
+</body>
+</html>

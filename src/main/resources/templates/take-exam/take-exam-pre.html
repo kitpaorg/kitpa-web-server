@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>시험 응시 전</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+<form id="form" th:action="@{/take/take-exam-pre}" method="post" enctype="multipart/form-data">
+<div>
+    <h2>신분증 업로드</h2>
+    <input type="file" accept="image/*" id="identity-card-photo" name="identityCardPhoto">
+</div>
+<div>
+    <h2>본인 얼굴 업로드</h2>
+    <input type="file" accept="image/*" id="self-photo" name="selfPhoto">
+</div>
+<div>
+    <h2>개인 정보 동의</h2>
+    <input type="checkbox" name="privacyCheck" id="privacy-check">
+</div>
+<div>
+    <h2>시험 시간 동안 화면 공유</h2>
+    <a target="_blank" id="screen-share" th:href="@{/take/share-screen}">화면 공유 페이지 열기</a>
+    <input id="screen-share-check" type="hidden" value="false">
+</div>
+    <div>
+        <button disabled type="button" id="enter-exam">시험 입장</button>
+    </div>
+</form>
+</body>
+<script>
+    $(document).ready(() => {
+        $("#screen-share").click(() => {
+            $("#screen-share-check").val("true");
+            if ($("#self-photo").val() && $("#identity-card-photo").val() && $("#privacy-check").is(":checked") && $("#screen-share-check").val() == "true") {
+                $("#enter-exam").attr('disabled', false)
+            } else {
+                $("#enter-exam").attr('disabled', true)
+            }
+        })
+
+        $("#privacy-check, #self-photo, #identity-card-photo").change(() => {
+            if ($("#self-photo").val() && $("#identity-card-photo").val() && $("#privacy-check").is(":checked") && $("#screen-share-check").val() == "true") {
+                $("#enter-exam").attr('disabled', false)
+            } else {
+                $("#enter-exam").attr('disabled', true)
+            }
+        })
+
+        $("#enter-exam").click(() => {
+            if (!$("#identity-card-photo").val()) {
+                alert("신분증 사진을 선택해주세요.")
+                return;
+            }
+            if (!$("#self-photo").val()) {
+                alert("본인 확인 사진을 선택해주세요.")
+                return;
+            }
+
+            if (!$("#privacy-check").is(":checked")) {
+                alert("개인 정보 동의에 동의해주세요.")
+                return;
+            }
+
+            if ($("#screen-share-check").val() == "false") {
+                alert("시험보는 화면을 공유해주세요.")
+                return;
+            }
+            $("#form").submit();
+        })
+    })
+
+</script>
+</html>

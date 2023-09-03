@@ -11,8 +11,7 @@ public class ExamDto {
     private Long id;
     private String title;
     private List<ProblemDto> problems = new ArrayList<>();
-    private LocalDateTime receiptStartDate;
-    private LocalDateTime receiptEndDate;
+    private LocalDateTime receiptIdleDate;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 }

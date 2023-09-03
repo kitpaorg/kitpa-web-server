@@ -27,6 +27,7 @@ public class AccountExam extends BaseTimeEntity{
     @ManyToOne
     @JoinColumn(name="EXAM_ID")
     private Exam exam;
+
     @ManyToOne
     @JoinColumn(name="ACCOUNT_ID")
     private Account account;

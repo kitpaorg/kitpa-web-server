@@ -15,11 +15,11 @@ import java.util.List;
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final AccountRepository accountRepository;
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Account account = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Account not found by email : " + email));
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        Account account = accountRepository.findByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("Account not found by userId : " + userId));
         return new User(
-                account.getEmail(),
+                account.getUserId(),
                 account.getPassword(),
                 List.of(new SimpleGrantedAuthority("ROLE_USER")));
     }

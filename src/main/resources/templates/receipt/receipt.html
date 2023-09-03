@@ -8,14 +8,12 @@
 </head>
 <body>
 <h2>접수 가능 시험 목록</h2>
-<a th:href="@{/receipts/cancel}">접수 취소</a>
 <table>
     <thead>
     <tr>
         <th>id</th>
         <th>title</th>
-        <th>receiptStartDate</th>
-        <th>receiptEndDate</th>
+        <th>receiptIdleDate</th>
         <th>startDate</th>
         <th>endDate</th>
     </tr>
@@ -28,10 +26,7 @@
             <p th:text="${exam.title}"></p>
         </td>
         <td>
-            <p th:text="${#temporals.format(exam.receiptStartDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
-        </td>
-        <td>
-            <p th:text="${#temporals.format(exam.receiptEndDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+            <p th:text="${#temporals.format(exam.receiptIdleDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
         </td>
         <td>
             <p th:text="${#temporals.format(exam.startDate, 'yyyy/MM/dd HH:mm:ss')}"></p>

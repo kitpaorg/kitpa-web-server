@@ -5,15 +5,11 @@ import com.kitpa.kitpaserver.entity.Account;
 import com.kitpa.kitpaserver.entity.AccountExam;
 import com.kitpa.kitpaserver.entity.Exam;
 import com.kitpa.kitpaserver.exception.AlreadyExistsException;
-import com.kitpa.kitpaserver.exception.InvalidException;
-import com.kitpa.kitpaserver.exception.NotFoundException;
 import com.kitpa.kitpaserver.repository.AccountExamRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -28,8 +24,8 @@ public class ReceiptService {
         return examService.getPagedExamWhenCanReceipt(page, size);
     }
 
-    public void receiptExam(String email, Long examId) {
-        Account account = accountLookupService.getAccountEntityByEmail(email);
+    public void receiptExam(String userId, Long examId) {
+        Account account = accountLookupService.getAccountEntityByUserId(userId);
         Exam exam = examService.getExamEntity(examId);
 
         if (accountExamRepository.existsByAccountAndExam(account, exam)) {
@@ -38,26 +34,5 @@ public class ReceiptService {
 
         AccountExam accountExam = AccountExam.create(account, exam);
         accountExamRepository.save(accountExam);
-    }
-
-    public Page<ExamDto> getReceiptCanCancellation(Integer page, Integer size, String email) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        Account account = accountLookupService.getAccountEntityByEmail(email);
-        return accountExamRepository.findByCanCancellation(pageRequest, account)
-                .map(AccountExam::getExam)
-                .map(e -> mapper.map(e, ExamDto.class));
-    }
-
-    @Transactional
-    public void cancellationExam(String email, Long examId) {
-        Account account = accountLookupService.getAccountEntityByEmail(email);
-        Exam examEntity = examService.getExamEntity(examId);
-        AccountExam accountExam = accountExamRepository
-                .findByAccountAndExam(account, examEntity)
-                .orElseThrow(NotFoundException::new);
-        if (!accountExam.getExam().canCancel()) {
-            throw new InvalidException();
-        }
-        accountExamRepository.delete(accountExam);
     }
 }

@@ -15,12 +15,11 @@
         <th>score</th>
         <th>type</th>
         <th>answer</th>
-        <th>content</th>
     </tr>
     </thead>
     <tr th:each="problem, idx : ${problems}">
         <td>
-            <p th:text="${problem.id}"></p>
+            <a th:href="@{/problems/{id}/detail(id=${problem.id})}"><p th:text="${problem.id}"></p></a>
         </td>
         <td>
             <p th:text="${problem.problemNumber}"></p>
@@ -29,16 +28,13 @@
             <p th:text="${problem.title}"></p>
         </td>
         <td>
-            <p th:text="${problem.score}"></p>
+            <p th:text="${problem.maxScore}"></p>
         </td>
         <td>
             <p th:text="${problem.type}"></p>
         </td>
         <td>
             <p th:text="${problem.answer}"></p>
-        </td>
-        <td>
-            <p th:text="${problem.content}"></p>
         </td>
     </tr>
 </table>

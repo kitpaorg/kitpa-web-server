@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>문제 등록</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 </head>
 <body>
     <h1>문제 등록 페이지</h1>
@@ -16,8 +18,8 @@
             <input th:field="*{title}" type="text">
         </div>
         <div>
-            <label th:for="score">문제 점수</label>
-            <input th:field="*{score}" type="text">
+            <label th:for="maxScore">문제 점수</label>
+            <input th:field="*{maxScore}" type="text">
         </div>
         <div>
             <label th:for="type">문제 형식</label>
@@ -34,9 +36,20 @@
         </div>
         <div>
             <label th:for="content">문제 본문</label>
-            <input th:field="*{content}" type="text">
+            <textarea id="content" name="content"></textarea>
         </div>
         <button type="submit">등록</button>
     </form>
+    <script>
+        new SimpleMDE({
+            element: document.getElementById("content"),
+            toolbar: false,
+            indentWithTabs: false,
+            renderingConfig: {
+                singleLineBreaks: false,
+                codeSyntaxHighlighting: true,
+            }
+        });
+    </script>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.kitpa.kitpaserver.service;
 
 import com.kitpa.kitpaserver.converter.ExamConverter;
 import com.kitpa.kitpaserver.dto.ExamDto;
+import com.kitpa.kitpaserver.entity.Account;
 import com.kitpa.kitpaserver.entity.Exam;
 import com.kitpa.kitpaserver.entity.Problem;
 import com.kitpa.kitpaserver.exception.NotFoundException;
@@ -47,8 +48,7 @@ public class ExamService {
         }
         return Exam.create(
                 form.getTitle(),
-                form.getReceiptStartDate(),
-                form.getReceiptEndDate(),
+                form.getReceiptIdleDate(),
                 form.getStartDate(),
                 form.getEndDate(),
                 problems);

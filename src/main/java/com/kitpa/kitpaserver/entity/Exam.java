@@ -23,14 +23,12 @@ public class Exam extends BaseTimeEntity {
     private String title;
     @OneToMany(mappedBy = "exam")
     private List<Problem> problems = new ArrayList<>();
-    private LocalDateTime receiptStartDate;
-    private LocalDateTime receiptEndDate;
+    private LocalDateTime receiptIdleDate;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
     public static Exam create(String title,
-                              LocalDateTime receiptStartDate,
-                              LocalDateTime receiptEndDate,
+                              LocalDateTime receiptIdleDate,
                               LocalDateTime startDate,
                               LocalDateTime endDate,
                               List<Problem> problems) {
@@ -40,14 +38,23 @@ public class Exam extends BaseTimeEntity {
             problems.forEach(p -> p.setExam(exam));
         }
         exam.title = title;
-        exam.receiptStartDate = receiptStartDate;
-        exam.receiptEndDate = receiptEndDate;
+        exam.receiptIdleDate = receiptIdleDate;
         exam.startDate = startDate;
         exam.endDate = endDate;
         return exam;
     }
 
-    public boolean canCancel(){
-        return receiptEndDate.isAfter(LocalDateTime.now());
+    public boolean canEnterIdle(LocalDateTime now){
+        return
+                now.isAfter(receiptIdleDate) &&
+                now.isBefore(startDate) &&
+                now.isBefore(endDate);
+    }
+
+    public boolean canEnterExam(LocalDateTime now){
+        return
+                now.isAfter(receiptIdleDate) &&
+                now.isAfter(startDate) &&
+                now.isBefore(endDate);
     }
 }

@@ -8,7 +8,7 @@ import lombok.Data;
 public class ProblemForm {
     private Integer problemNumber;
     private String title;
-    private Integer score;
+    private Integer maxScore;
     private ProblemType type;
     private String answer;
     private String content;
@@ -18,7 +18,7 @@ public class ProblemForm {
                 .problemNumber(problemNumber)
                 .title(title)
                 .type(type)
-                .maxScore(score)
+                .maxScore(maxScore)
                 .answer(answer)
                 .content(content)
                 .build();

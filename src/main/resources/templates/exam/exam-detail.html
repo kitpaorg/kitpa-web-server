@@ -16,12 +16,8 @@
         <p th:text="${exam.title}"></p>
     </div>
     <div>
-        <h3>receiptStartDate</h3>
-        <p th:text="${#temporals.format(exam.receiptStartDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
-    </div>
-    <div>
-        <h3>receiptEndDate</h3>
-        <p th:text="${#temporals.format(exam.receiptEndDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+        <h3>receiptIdleDate</h3>
+        <p th:text="${#temporals.format(exam.receiptIdleDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
     </div>
     <div>
         <h3>startDate</h3>
@@ -57,7 +53,7 @@
                 <p th:text="${problem.title}"></p>
             </td>
             <td>
-                <p th:text="${problem.score}"></p>
+                <p th:text="${problem.maxScore}"></p>
             </td>
             <td>
                 <p th:text="${problem.type}"></p>
