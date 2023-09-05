@@ -23,21 +23,21 @@ import static com.kitpa.kitpaserver.utils.PagingUtils.*;
 public class ReceiptController {
     private final ReceiptService receiptService;
 
-    @GetMapping("/list")
-    public String receiptListView(@RequestParam(required = false, defaultValue = "1") Integer page,
-                                  @RequestParam(required = false, defaultValue = "10") Integer size,
-                                  Model model) {
-        Page<ExamDto> examDtos = receiptService.getPagedExamWhenCanReceipt(page - 1, size);
-        model.addAttribute("exams", examDtos);
-        injectPaging(model, examDtos);
-        return "receipt/receipt";
-    }
-
-    @ResponseBody
-    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<?> receiptRegister(@CurrentUserId String email,
-                                             @RequestParam Long examId){
-        receiptService.receiptExam(email, examId);
-        return ResponseEntity.noContent().build();
-    }
+//    @GetMapping("/list")
+//    public String receiptListView(@RequestParam(required = false, defaultValue = "1") Integer page,
+//                                  @RequestParam(required = false, defaultValue = "10") Integer size,
+//                                  Model model) {
+//        Page<ExamDto> examDtos = receiptService.getPagedExamWhenCanReceipt(page - 1, size);
+//        model.addAttribute("exams", examDtos);
+//        injectPaging(model, examDtos);
+//        return "receipt/receipt";
+//    }
+//
+//    @ResponseBody
+//    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+//    public ResponseEntity<?> receiptRegister(@CurrentUserId String email,
+//                                             @RequestParam Long examId){
+//        receiptService.receiptExam(email, examId);
+//        return ResponseEntity.noContent().build();
+//    }
 }

@@ -78,9 +78,9 @@ public class ExamService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public Page<ExamDto> getPagedExamWhenCanReceipt(Integer page, Integer size){
-        PageRequest pageRequest = PageRequest.of(page, size);
-        return examRepository.findPageByCanReceipt(pageRequest, LocalDateTime.now())
-                .map(this::mapToExamDto);
-    }
+//    public Page<ExamDto> getPagedExamWhenCanReceipt(Integer page, Integer size){
+//        PageRequest pageRequest = PageRequest.of(page, size);
+//        return examRepository.findPageByCanReceipt(pageRequest, LocalDateTime.now())
+//                .map(this::mapToExamDto);
+//    }
 }

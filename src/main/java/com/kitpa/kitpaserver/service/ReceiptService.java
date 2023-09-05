@@ -20,19 +20,19 @@ public class ReceiptService {
     private final AccountExamRepository accountExamRepository;
     private final AccountLookupService accountLookupService;
 
-    public Page<ExamDto> getPagedExamWhenCanReceipt(Integer page, Integer size) {
-        return examService.getPagedExamWhenCanReceipt(page, size);
-    }
-
-    public void receiptExam(String userId, Long examId) {
-        Account account = accountLookupService.getAccountEntityByUserId(userId);
-        Exam exam = examService.getExamEntity(examId);
-
-        if (accountExamRepository.existsByAccountAndExam(account, exam)) {
-            throw new AlreadyExistsException();
-        }
-
-        AccountExam accountExam = AccountExam.create(account, exam);
-        accountExamRepository.save(accountExam);
-    }
+//    public Page<ExamDto> getPagedExamWhenCanReceipt(Integer page, Integer size) {
+//        return examService.getPagedExamWhenCanReceipt(page, size);
+//    }
+//
+//    public void receiptExam(String userId, Long examId) {
+//        Account account = accountLookupService.getAccountEntityByUserId(userId);
+//        Exam exam = examService.getExamEntity(examId);
+//
+//        if (accountExamRepository.existsByAccountAndExam(account, exam)) {
+//            throw new AlreadyExistsException();
+//        }
+//
+//        AccountExam accountExam = AccountExam.create(account, exam);
+//        accountExamRepository.save(accountExam);
+//    }
 }
