@@ -13,5 +13,5 @@ ENV WHATAP ${WHATAP}
 
 RUN sed -i "1s/.*/${WHATAP}/g" /deploy/apm/whatap/whatap.conf
 
-ENV SPRING_OPTION="-Dspring.profiles.active=local"
+ENV SPRING_OPTION=$SPRING_OPTION
 ENTRYPOINT exec java -javaagent:/deploy/apm/whatap/whatap.agent-2.2.16.jar -jar ${SPRING_OPTION} kitpa-server-0.1.jar
