@@ -80,7 +80,8 @@ public class SecurityConfig {
                 .authenticationProvider(userAuthenticationProvider)
                 .antMatcher("/**")
                 .authorizeHttpRequests(re ->
-                        re.anyRequest().hasRole("USER")
+                        re.antMatchers("/css/**").permitAll()
+                        .anyRequest().hasRole("USER")
                 )
                 .formLogin(form ->
                         form

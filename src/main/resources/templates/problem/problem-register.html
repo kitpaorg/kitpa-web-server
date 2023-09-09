@@ -1,13 +1,195 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>문제 등록</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <meta charset="UTF-8" />
+    <title>Kitpa | 시험 상세 보기</title>
+    <meta charset="UTF-8" />
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"
+    ></script>
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+            crossorigin="anonymous"
+    />
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet"
+    />
+    <link th:href="@{/css/admin-front.css}" rel="stylesheet" />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+            integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
 </head>
-<body>
-    <h1>문제 등록 페이지</h1>
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- Sidebar -->
+    <ul
+            class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+            id="accordionSidebar"
+    >
+        <!-- Sidebar - Brand -->
+        <a
+                class="sidebar-brand d-flex align-items-center justify-content-center"
+                href="index.html"
+        >
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">kitpa</div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0" />
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="login.html">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>로그인</span></a
+            >
+        </li>
+
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-sticky-note"></i>
+                <span>문제 목록</span></a
+            >
+        </li>
+
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-university"></i>
+                <span>시험 목록</span></a
+            >
+        </li>
+
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-torii-gate"></i>
+                <span>시험 접수</span></a
+            >
+        </li>
+
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-running"></i>
+                <span>시험 입장</span></a
+            >
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider" />
+
+        <!-- Heading -->
+        <div class="sidebar-heading">Admin</div>
+
+        <li class="nav-item active">
+            <a class="nav-link" href="bulk-import-account.html">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>계정 벌크 생성</span></a
+            >
+        </li>
+
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-sticky-note"></i>
+                <span>문제 등록</span></a
+            >
+        </li>
+
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-university"></i>
+                <span>시험 등록</span></a
+            >
+        </li>
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div class="p-5">
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">문제 등록</h1>
+                </div>
+
+                <!-- Content Row -->
+                <div class="row">
+                    <!-- Earnings (Monthly) Card Example -->
+                    <form>
+                        <div class="form-group row">
+                            <label for="problemNumber" class="col-sm-2 col-form-label">문제 번호</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="problemNumber" name="problemNumber" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="title" class="col-sm-2 col-form-label">문제 제목</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="title" name="title" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="maxScore" class="col-sm-2 col-form-label">문제 점수</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="maxScore" name="maxScore" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="mySelect" class="col-sm-2 col-form-label">문제 형식</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="mySelect">
+                                    <option value="MULTIPLE">객관식</option>
+                                    <option value="SHORT">단답형</option>
+                                    <option value="BLANK">빈칸채우기</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="answer" class="col-sm-2 col-form-label">문제 답</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="answer" name="answer" class="form-control">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="content" class="col-sm-2 col-form-label">문제 본문</label>
+                            <div class="col-sm-10">
+                                <textarea id="content" name="content" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-user btn-block">등록</button>
+
+                    </form>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+    </div>
+</div>
+
+<!--원본
+ <h1>문제 등록 페이지</h1>
     <form th:action="@{/admin/problems/register}" th:object="${problem}" th:method="POST">
         <div>
             <label th:for="problemNumber">문제 번호</label>
@@ -41,6 +223,19 @@
         <button type="submit">등록</button>
     </form>
     <script>
+        new SimpleMDE({
+            element: document.getElementById("content"),
+            toolbar: false,
+            indentWithTabs: false,
+            renderingConfig: {
+                singleLineBreaks: false,
+                codeSyntaxHighlighting: true,
+            }
+        });
+    </script>
+-->
+
+<script>
         new SimpleMDE({
             element: document.getElementById("content"),
             toolbar: false,
