@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .antMatchers("/h2-console/**")
                 .permitAll()
 
-                .antMatchers("/","/accounts/login/**", "/accounts/register")
+                .antMatchers("**","/","/accounts/login/**", "/accounts/register")
                 .permitAll()
 
                 .anyRequest()

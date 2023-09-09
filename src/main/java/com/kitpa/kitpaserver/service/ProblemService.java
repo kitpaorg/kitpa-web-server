@@ -1,6 +1,7 @@
 package com.kitpa.kitpaserver.service;
 
 import com.kitpa.kitpaserver.dto.ProblemDto;
+import com.kitpa.kitpaserver.entity.Exam;
 import com.kitpa.kitpaserver.entity.Problem;
 import com.kitpa.kitpaserver.exception.NotFoundException;
 import com.kitpa.kitpaserver.form.ProblemForm;
@@ -43,5 +44,10 @@ public class ProblemService {
         Problem problem = repository.findById(id)
                 .orElseThrow(NotFoundException::new);
         return mapper.map(problem, ProblemDto.class);
+    }
+
+    public Problem getProblemByExamAndProblemNumber(Exam exam, Long problemNumber) {
+        return repository.findProblemByExamAndProblemNumber(exam, problemNumber)
+                .orElseThrow(NotFoundException::new);
     }
 }

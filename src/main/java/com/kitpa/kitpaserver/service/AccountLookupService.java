@@ -16,21 +16,21 @@ public class AccountLookupService {
     private final AccountRepository accountRepository;
     private final ModelMapper mapper;
 
-    public AccountDto getAccountByEmail(String email){
-        Account account = getAccount(email);
+    public AccountDto getAccountByUserId(String userId){
+        Account account = getAccount(userId);
         return mapper.map(account, AccountDto.class);
     }
 
     @Transactional
-    public Account getAccountEntityByEmail(String email) {
-        return getAccount(email);
+    public Account getAccountEntityByUserId(String userId) {
+        return getAccount(userId);
     }
 
-    private Account getAccount(String email) {
-        if (StringUtils.isEmpty(email)) {
+    private Account getAccount(String userId) {
+        if (StringUtils.isEmpty(userId)) {
             throw new NotFoundException();
         }
-        return accountRepository.findByEmail(email)
+        return accountRepository.findByUserId(userId)
                 .orElseThrow(NotFoundException::new);
     }
 }

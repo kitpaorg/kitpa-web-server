@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>시험 화면 공유</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+</head>
+<body>
+<div id="container">
+    <h1><a href="//webrtc.github.io/samples/" title="WebRTC samples homepage">WebRTC samples</a>
+        <span>getDisplayMedia</span></h1>
+
+    <video id="gum-local" autoplay playsinline muted></video>
+    <button id="startButton" disabled>Start</button>
+    <div id="errorMsg"></div>
+
+    <p>Display the screensharing stream from <code>getDisplayMedia()</code> in a video element.</p>
+</div>
+<script>
+    const preferredDisplaySurface = document.getElementById('displaySurface');
+    const startButton = document.getElementById('startButton');
+
+    if (adapter.browserDetails.browser === 'chrome' &&
+        adapter.browserDetails.version >= 107) {
+        // See https://developer.chrome.com/docs/web-platform/screen-sharing-controls/
+        document.getElementById('options').style.display = 'block';
+    } else if (adapter.browserDetails.browser === 'firefox') {
+        // Polyfill in Firefox.
+        // See https://blog.mozilla.org/webrtc/getdisplaymedia-now-available-in-adapter-js/
+        adapter.browserShim.shimGetDisplayMedia(window, 'screen');
+    }
+
+    function handleSuccess(stream) {
+        startButton.disabled = true;
+        preferredDisplaySurface.disabled = true;
+        const video = document.querySelector('video');
+        video.srcObject = stream;
+
+        // demonstrates how to detect that the user has stopped
+        // sharing the screen via the browser UI.
+        stream.getVideoTracks()[0].addEventListener('ended', () => {
+            errorMsg('The user has ended sharing the screen');
+            startButton.disabled = false;
+            preferredDisplaySurface.disabled = false;
+        });
+    }
+
+    function handleError(error) {
+        errorMsg(`getDisplayMedia error: ${error.name}`, error);
+    }
+
+    function errorMsg(msg, error) {
+        const errorElement = document.querySelector('#errorMsg');
+        errorElement.innerHTML += `<p>${msg}</p>`;
+        if (typeof error !== 'undefined') {
+            console.error(error);
+        }
+    }
+
+
+    startButton.addEventListener('click', () => {
+        const options = {audio: false, video: true, systemAudio: "exclude"};
+        const displaySurface = 'monitor';
+        options.video = {displaySurface};
+
+        navigator.mediaDevices.getDisplayMedia(options)
+            .then(handleSuccess, handleError);
+    });
+
+    if ((navigator.mediaDevices && 'getDisplayMedia' in navigator.mediaDevices)) {
+        startButton.disabled = false;
+    } else {
+        errorMsg('getDisplayMedia is not supported');
+    }
+</script>
+</body>
+</html>

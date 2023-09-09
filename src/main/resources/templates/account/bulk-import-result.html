@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>계정 벌크 생성 결과</title>
+</head>
+<body>
+<h2>계정 벌크 생성 결과</h2>
+<h4>생성 개수 : <span th:text="${accounts.size}"></span></h4>
+<table>
+    <tr th:each="account: ${accounts}">
+        <td th:text="${account.email}"></td>
+        <td th:text="${account.realName}"></td>
+        <td th:text="${account.school}"></td>
+        <td th:text="${account.address}"></td>
+        <td th:text="${account.phoneNumber}"></td>
+    </tr>
+</table>
+</body>
+</html>

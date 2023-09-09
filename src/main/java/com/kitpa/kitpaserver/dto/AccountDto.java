@@ -9,4 +9,9 @@ public class AccountDto {
     private String realName;
     private String username;
     private String phoneNumber;
+    private String school;
+    private String address;
+    private String selfPhoto;
+    private String identityPhoto;
+    private Long exam;
 }
