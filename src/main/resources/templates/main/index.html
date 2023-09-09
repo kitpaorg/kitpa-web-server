@@ -97,11 +97,47 @@
 
         <!-- Main Content -->
         <div id="content" class="p-5">
-            <h1>Main Page</h1>
-            <div><a th:href="@{/accounts/login}">로그인</a></div>
-            <form th:action="@{/accounts/logout}" method="post">
-                <div><button type="submit">로그아웃</button></div>
-            </form>
+            <div class="container-fluid vh-100 row justify-content-center align-items-center">
+                <h1 class="h3 mb-2 text-gray-800">Main Page</h1>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        시험 입장
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-running fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        생방 입장
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-video fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!--            <div><a th:href="@{/accounts/login}">시험 접수</a></div>-->
+<!--            <form th:action="@{/accounts/logout}" method="post">-->
+<!--                <div><button type="submit">로그아웃</button></div>-->
+<!--            </form>-->
+            </div>
         </div>
     </div>
 </body>
