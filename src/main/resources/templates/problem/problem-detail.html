@@ -37,7 +37,7 @@
         <div id="content"></div>
         </div>
     </div>
-    <a th:href="@{/problems/list}">문제 목록</a>
+    <a th:href="@{/admin/problems/list}">문제 목록</a>
     <script th:inline="javascript">
         document.getElementById('content').innerHTML =
             marked.parse(/*[[${problem.content}]]*/"");

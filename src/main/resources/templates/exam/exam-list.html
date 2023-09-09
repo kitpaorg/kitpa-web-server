@@ -5,7 +5,7 @@
     <title>시험 목록</title>
 </head>
 <body>
-<a th:href="@{/exams/register}">시험 등록</a>
+<a th:href="@{/admin/exams/register}">시험 등록</a>
 <table>
     <thead>
     <tr>
@@ -37,7 +37,7 @@
 </table>
 <div th:if="${exams.totalPages > 0}" class="pagination"
      th:each="pageNumber : ${pageNumbers}">
-    <a th:href="@{/exams/list(size=${exams.size}, page=${pageNumber})}"
+    <a th:href="@{/admin/exams/list(size=${exams.size}, page=${pageNumber})}"
        th:text="${pageNumber}"
        th:class="${pageNumber==exams.number + 1} ? active"></a>
 </div>

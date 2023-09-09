@@ -11,5 +11,8 @@
 <div><a th:href="@{/admin/problems/list}">문제 목록</a></div>
 <div><a th:href="@{/admin/exams/register}">시험 등록</a></div>
 <div><a th:href="@{/admin/exams/list}">시험 목록</a></div>
+<form th:action="@{/admin/accounts/logout}">
+    <button type="submit">로그아웃</button>
+</form>
 </body>
 </html>

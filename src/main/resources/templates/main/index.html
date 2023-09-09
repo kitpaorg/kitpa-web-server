@@ -7,6 +7,9 @@
 <body>
 <h1>Main Page</h1>
 <div><a th:href="@{/accounts/login}">로그인</a></div>
-<div><a th:href="@{/accounts/logout}">로그아웃</a></div>
+<form th:action="@{/accounts/logout}" method="post">
+    <div><button type="submit">로그아웃</button></div>
+</form>
+
 </body>
 </html>

@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>문제 등록 페이지</h1>
-    <form th:action="@{/problems/register}" th:object="${problem}" th:method="POST">
+    <form th:action="@{/admin/problems/register}" th:object="${problem}" th:method="POST">
         <div>
             <label th:for="problemNumber">문제 번호</label>
             <input th:field="*{problemNumber}" type="text">

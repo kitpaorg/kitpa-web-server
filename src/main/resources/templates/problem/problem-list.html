@@ -5,7 +5,7 @@
     <title>문제 목록</title>
 </head>
 <body>
-<a th:href="@{/problems/register}">문제 등록</a>
+<a th:href="@{/admin/problems/register}">문제 등록</a>
 <table>
     <thead>
     <tr>
@@ -40,7 +40,7 @@
 </table>
 <div th:if="${problems.totalPages > 0}" class="pagination"
      th:each="pageNumber : ${pageNumbers}">
-    <a th:href="@{/problems/list(size=${problems.size}, page=${pageNumber})}"
+    <a th:href="@{/admin/problems/list(size=${problems.size}, page=${pageNumber})}"
        th:text="${pageNumber}"
        th:class="${pageNumber==problems.number + 1} ? active"></a>
 </div>
