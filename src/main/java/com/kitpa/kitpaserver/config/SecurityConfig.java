@@ -13,14 +13,12 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
 @Configuration
-@Order(2)
 public class SecurityConfig {
     @Bean(name = "userAuthenticationProvider")
     public AuthenticationProvider userAuthenticationProvider(@Qualifier("generalUserDetailsService") UserDetailsService userDetailsService,
@@ -49,25 +47,20 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain userFilterChain(HttpSecurity http,
-                                               @Qualifier("userAuthenticationProvider") AuthenticationProvider userAuthenticationProvider,
-                                               @Qualifier("adminAuthenticationProvider") AuthenticationProvider adminAuthenticationProvider) throws Exception {
+    @Order(0)
+    public SecurityFilterChain adminFilterChain(HttpSecurity http,
+                                                @Qualifier("adminAuthenticationProvider") AuthenticationProvider adminAuthenticationProvider) throws Exception {
+
         http
-                .antMatcher("/admin/**")
                 .authenticationProvider(adminAuthenticationProvider)
-                .authorizeRequests()
-
-                .antMatchers("/admin/accounts/login")
-                .permitAll()
-
-                .antMatchers("/admin/**")
-                .hasRole("ADMIN")
-
-                .and()
+                .antMatcher("/admin/**")
+                .authorizeHttpRequests(re->
+                    re.anyRequest().hasRole("ADMIN")
+                )
                 .formLogin(form ->
                         form
                                 .loginPage("/admin/accounts/login")
-                                .loginProcessingUrl("/admin/accounts/login")
+                                .loginProcessingUrl("/admin/accounts/admin_login")
                                 .defaultSuccessUrl("/admin", true)
                                 .failureUrl("/admin/accounts/login?error=true")
                                 .permitAll())
@@ -75,23 +68,24 @@ public class SecurityConfig {
                         logout
                                 .logoutUrl("/admin/accounts/logout")
                                 .logoutSuccessUrl("/admin/accounts/login")
-                                .deleteCookies("JSESSIONID"))
+                                .deleteCookies("JSESSIONID"));
+        return http.build();
+    }
 
-                .antMatcher("/**")
+    @Bean
+    @Order(1)
+    public SecurityFilterChain userFilterChain(HttpSecurity http,
+                                               @Qualifier("userAuthenticationProvider") AuthenticationProvider userAuthenticationProvider) throws Exception {
+        http
                 .authenticationProvider(userAuthenticationProvider)
-                .authorizeRequests()
-
-                .antMatchers("/", "/accounts/login")
-                .permitAll()
-
-                .antMatchers("/**")
-                .hasRole("USER")
-
-                .and()
+                .antMatcher("/**")
+                .authorizeHttpRequests(re ->
+                        re.anyRequest().hasRole("USER")
+                )
                 .formLogin(form ->
                         form
                                 .loginPage("/accounts/login")
-                                .loginProcessingUrl("/accounts/login")
+                                .loginProcessingUrl("/accounts/user_login")
                                 .defaultSuccessUrl("/", true)
                                 .failureUrl("/accounts/login?error=true")
                                 .permitAll()
@@ -103,6 +97,17 @@ public class SecurityConfig {
                                 .deleteCookies("JSESSIONID")
                 );
 
+//                .and()
+//
+//                .authorizeRequests()
+//                .antMatchers("/admin/**")
+//                .hasRole("ADMIN")
+//
+//                .and()
+//
+//                .authorizeRequests()
+//                .antMatchers("/**")
+//                .hasRole("USER");
         return http.build();
     }
 

@@ -14,7 +14,6 @@ import javax.annotation.PostConstruct;
 @Service
 public class GenTestAccount {
     private final AccountRegisterService accountRegisterService;
-    private final AdminAccountRepository adminAccountRepository;
 
     @PostConstruct
     public void initAccount(){
@@ -30,9 +29,6 @@ public class GenTestAccount {
         accountForm2.setPhoneNumber("01012341234");
         accountForm2.setUserId("kayoko");
 
-        AdminAccount account = new AdminAccount("qwer1234!");
-
-        adminAccountRepository.saveAndFlush(account);
         accountRegisterService.createAccount(accountForm1);
         accountRegisterService.createAccount(accountForm2);
     }
