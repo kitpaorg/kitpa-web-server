@@ -25,16 +25,17 @@
     <div id="content-wrapper" class="d-flex flex-column">
 
         <!-- Main Content -->
-        <div id="content" class="p-5">
+        <div id="content" class="p-5 vh-100">
             <div id="container">
-                <h1><a href="//webrtc.github.io/samples/" title="WebRTC samples homepage">WebRTC samples</a>
-                    <span>getDisplayMedia</span></h1>
+                <h1 class="h3 mb-4 text-gray-800">시험 화면 공유</h1>
 
-                <video id="gum-local" autoplay playsinline muted></video>
-                <button id="startButton" disabled>Start</button>
-                <div id="errorMsg"></div>
+                <div class="share-screen-video-box">
+                    <video class="shadow p-3 mb-5 bg-white rounded" id="gum-local" autoplay playsinline muted></video>
+                </div>
+                <button id="startButton" class="btn btn-primary"><i class="fas fa-video mr-2"></i> Start</button>
+                <div id="errorMsg" class="mt-2"></div>
+                <div id="displaySurface"></div>
 
-                <p>Display the screensharing stream from <code>getDisplayMedia()</code> in a video element.</p>
             </div>
         </div>
     </div>
@@ -44,7 +45,7 @@
     const startButton = document.getElementById('startButton');
 
     if (adapter.browserDetails.browser === 'chrome' &&
-        adapter.browserDetails.version >= 107) {
+        adapter.browserDetails.version >= 107 && document.getElementById('options')) {
         // See https://developer.chrome.com/docs/web-platform/screen-sharing-controls/
         document.getElementById('options').style.display = 'block';
     } else if (adapter.browserDetails.browser === 'firefox') {

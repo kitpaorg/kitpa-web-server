@@ -114,7 +114,7 @@
                 <h1 class="h3 mb-0 text-gray-800">시험 등록</h1>
             </div>
 
-            <!-- Content Row -->
+            <!-- Exam-register-form -->
             <div class="row">
                 <!-- Earnings (Monthly) Card Example -->
                 <form id="form-register" th:action="@{/exams/register}" th:object="${exam}" th:method="POST">
@@ -157,6 +157,54 @@
                     <button type="submit" class="btn btn-primary btn-user btn-block">등록</button>
 
                 </form>
+            </div>
+
+            <!-- Problem list -->
+            <div class="row mt-2">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">problemNumber</th>
+                            <th scope="col">title</th>
+                            <th scope="col">score</th>
+                            <th scope="col">type</th>
+                            <th scope="col">answer</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="problem, idx : ${problems}">
+                            <th scope="row">
+                                <a th:href="@{/problems/{id}/detail(id=${problem.id})}"><p th:text="${problem.id}">1</p></a>
+                            </td>
+                            <td>
+                                <p th:text="${problem.problemNumber}">1</p>
+                            </td>
+                            <td>
+                                <p th:text="${problem.title}">2</p>
+                            </td>
+                            <td>
+                                <p th:text="${problem.maxScore}">3</p>
+                            </td>
+                            <td>
+                                <p th:text="${problem.type}">4</p>
+                            </td>
+                            <td>
+                                <p th:text="${problem.answer}">5</p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div th:if="${problems.totalPages > 0}" class="pagination"
+                     th:each="pageNumber : ${pageNumbers}">
+                    <a th:href="@{/problems/list(size=${problems.size}, page=${pageNumber})}"
+                       th:text="${pageNumber}"
+                       th:class="${pageNumber==problems.number + 1} ? active"></a>
+                </div>
             </div>
         </div>
         </div>

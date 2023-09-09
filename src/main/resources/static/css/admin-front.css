@@ -11302,3 +11302,14 @@
     overflow-y: scroll;
     height: 40vh;
   }
+
+  .share-screen-video-box {
+    margin: 0 auto;
+    max-width: 1024px;
+    width: 100%;
+    padding: 0 5%;
+  }
+
+  .share-screen-video-box video {
+    width: 100%;
+  }
