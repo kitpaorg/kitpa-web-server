@@ -1,4 +1,4 @@
-package com.kitpa.kitpaserver.controller;
+package com.kitpa.kitpaserver.controller.admin;
 
 import com.kitpa.kitpaserver.dto.ProblemDto;
 import com.kitpa.kitpaserver.form.ProblemForm;
@@ -14,16 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import static com.kitpa.kitpaserver.utils.PagingUtils.injectPaging;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/problems")
-public class ProblemController {
+@RequestMapping("/admin/problems")
+public class AdminProblemController {
     private final ProblemService problemService;
 
     @GetMapping("/list")

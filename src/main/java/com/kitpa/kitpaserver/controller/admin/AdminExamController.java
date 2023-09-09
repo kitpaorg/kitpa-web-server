@@ -1,4 +1,4 @@
-package com.kitpa.kitpaserver.controller;
+package com.kitpa.kitpaserver.controller.admin;
 
 import com.kitpa.kitpaserver.dto.ExamDto;
 import com.kitpa.kitpaserver.form.ExamForm;
@@ -18,8 +18,8 @@ import static com.kitpa.kitpaserver.utils.PagingUtils.injectPaging;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/exams")
-public class ExamController {
+@RequestMapping("/admin/exams")
+public class AdminExamController {
     private final ExamService examService;
 
     @GetMapping("/list")

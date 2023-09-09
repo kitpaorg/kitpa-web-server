@@ -1,4 +1,4 @@
-package com.kitpa.kitpaserver.controller;
+package com.kitpa.kitpaserver.controller.exception.handler;
 
 import com.kitpa.kitpaserver.exception.AlreadyExistsException;
 import com.kitpa.kitpaserver.exception.InvalidException;

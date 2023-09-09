@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+</head>
+<body>
+<form th:action="@{/admin/accounts/login}" method="POST">
+    <div>
+        <label for="username">관리자 uuid</label>
+        <input id="username" name="username" type="text">
+    </div>
+    <input hidden id="password" name="password" type="password">
+    <button type="submit">전송</button>
+</form>
+</body>
+<script>
+    $("#username").change(() => {
+        let uuid = $("#username").val();
+        $("#password").val(uuid);
+    });
+</script>
+</html>
