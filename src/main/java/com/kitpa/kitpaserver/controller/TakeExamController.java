@@ -140,6 +140,6 @@ public class TakeExamController {
             return "redirect:/take/take-exam-pre";
         }
         takeExamService.registerPreData(userId, form);
-        return "redirect:/take/exam";
+        return "redirect:/take/exam?problemNumber=1";
     }
 }

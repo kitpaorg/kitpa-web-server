@@ -56,7 +56,7 @@ public class InitTestData {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime receiptIdleDate = now.minusMinutes(1L);
         examForm.setReceiptIdleDate(receiptIdleDate);
-        examForm.setStartDate(now.plusMinutes(30L));
+        examForm.setStartDate(now.plusMinutes(1L));
         examForm.setEndDate(now.plusHours(2L));
         examForm.setProblemIds(List.of(1L,2L,3L));
 
@@ -74,11 +74,9 @@ public class InitTestData {
         accountForm2.setRealName("kayoko");
         accountForm2.setPhoneNumber("01012341234");
         accountForm2.setUserId("kayoko");
-        accountForm1.setExam(1L);
+        accountForm2.setExam(1L);
 
         accountRegisterService.createAccount(accountForm1);
         accountRegisterService.createAccount(accountForm2);
-
-
     }
 }

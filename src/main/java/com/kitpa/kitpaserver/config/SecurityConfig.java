@@ -75,7 +75,12 @@ public class SecurityConfig {
     @Order(1)
     public SecurityFilterChain userFilterChain(HttpSecurity http,
                                                @Qualifier("userAuthenticationProvider") AuthenticationProvider userAuthenticationProvider) throws Exception {
-        http
+        http.csrf()
+                .ignoringAntMatchers("/h2-console/**")
+                .and()
+                .headers().frameOptions().sameOrigin()
+                .and()
+
                 .authenticationProvider(userAuthenticationProvider)
                 .antMatcher("/**")
                 .authorizeHttpRequests(re ->
