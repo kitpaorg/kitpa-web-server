@@ -20,12 +20,14 @@ public class GenTestAccount {
         accountForm1.setNewPass("qwer1234!");
         accountForm1.setRealName("iro");
         accountForm1.setPhoneNumber("01012341234");
+        accountForm1.setUserId("iro");
 
         AccountForm accountForm2 = new AccountForm();
         accountForm2.setEmail("kayoko@gmail.com");
         accountForm2.setNewPass("qwer1234!");
         accountForm2.setRealName("kayoko");
         accountForm2.setPhoneNumber("01012341234");
+        accountForm2.setUserId("kayoko");
 
         accountRegisterService.createAccount(accountForm1);
         accountRegisterService.createAccount(accountForm2);
