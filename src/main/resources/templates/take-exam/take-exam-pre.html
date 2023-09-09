@@ -96,7 +96,7 @@
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">시험  응시 전</h1>
             </div>
-            <form id="form" th:action="@{/take/take-exam}" method="post" enctype="multipart/form-data">
+            <form id="form" th:action="@{/take/take-exam-pre}" method="post" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label for="identity-card-photo" class="col-sm-2 col-form-label">신분증 업로드</label>
                     <div class="col-sm-10">
@@ -125,10 +125,13 @@
                                         시험 시간 동안 화면 공유
                                     </div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        <a class="btn btn-secondary" target="_blank" id="screen-share" th:href="@{/take/share-screen}">
+                                            화면 공유 페이지 열기
                                         <label for="screen-share-check">
-                                            <a class="btn btn-secondary" target="_blank" id="screen-share" th:href="@{/take/share-screen}">화면 공유 페이지 열기</a>
+
                                             <input id="screen-share-check" type="hidden" value="false">
                                         </label>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

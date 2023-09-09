@@ -20,18 +20,18 @@
     <!-- Content Wrapper -->
     <div class="d-flex" style="width: 90vw">
         <!-- Main Content -->
-        <div class="p-5" style="position: relative">
+        <div class="p-5" style="position: relative; width:100%;">
             <div
                     class="d-sm-flex align-items-center justify-content-between mb-4"
             >
                 <h1 class="h3 mb-0 text-gray-800">
-                    <span th:text="${problem.title}">문제 1번</span> -
-                    <span th:text="${problem.maxScore}">2점</span>
+                    <span th:text="${problem.title}"></span> -
+                    <span th:text="${problem.maxScore}"></span>점
                     <p>
                         <span
                                 th:text="${problem.type}"
                                 class="badge rounded-pill bg-secondary fs-6"
-                        >MULTIPLE</span
+                        ></span
                         >
                     </p>
                 </h1>
@@ -131,15 +131,15 @@
                 <span style="color: #fff">문제 목록</span>
             </div>
 
-            <div class="fs-3" style="color: #2b2b2b; font-weight: bold">
+            <div  class="d-block px-5 text-break"  style="color: #2b2b2b; font-weight: bold">
                 <div
-                        style="display: inline-block"
+                        class="d-inline-block mr-1 fs-5"
                         th:each="oneProblemNumer : ${problemNumberList}"
                 >
-                    <a th:href="@{/take/exam(problemNumber=${oneProblemNumer})}"
+                    <a th:href="@{/take/exam(problemNumber=${oneProblemNumer})}" style="color:#2b2b2b;"
                     ><span
                             th:text="|${oneProblemNumer}&nbsp|"
-                            class="d-block px-5 text-break"
+
                     ></span
                     ></a
                     >
