@@ -6,98 +6,201 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
             integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link th:href="@{/css/admin-front.css}" rel="stylesheet">
 </head>
-<body>
-<div>
-    <h1>문제 정보</h1>
-    <h3>문제 아이디</h3>
-    <p th:text="${problem.id}"></p>
-    <h3>문제 번호</h3>
-    <p th:text="${problem.problemNumber}"></p>
-    <h3>문제 점수</h3>
-    <p th:text="${problem.maxScore}"></p>
-    <h3>문제 제목</h3>
-    <p th:text="${problem.title}"></p>
-    <h3>문제 타입</h3>
-    <p th:text="${problem.type}"></p>
-    <h3>문제 내용</h3>
-    <div style="border:2px solid black">
-        <div id="content"></div>
-    </div>
-</div>
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- Content Wrapper -->
+    <div class="d-flex" style="width: 90vw">
+        <!-- Main Content -->
+        <div class="p-5" style="position: relative">
+            <div
+                    class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+                <h1 class="h3 mb-0 text-gray-800">
+                    <span th:text="${problem.title}">문제 1번</span> -
+                    <span th:text="${problem.maxScore}">2점</span>
+                    <p>
+                        <span
+                                th:text="${problem.type}"
+                                class="badge rounded-pill bg-secondary fs-6"
+                        >MULTIPLE</span
+                        >
+                    </p>
+                </h1>
+            </div>
 
-<div>
-    <h2>문제 번호 목록</h2>
-    <div style="display:inline-block" th:each="oneProblemNumer : ${problemNumberList}">
-        <a th:href="@{/take/exam(problemNumber=${oneProblemNumer})}"><span
-                th:text="|${oneProblemNumer}&nbsp|"></span></a>
-    </div>
-</div>
-<div>
-    <h2>남은 시간</h2>
-    <h3 id="time-remaining"></h3>
-</div>
-<form id="form" th:action="@{/take/exam}" method="post">
-    <div th:if="${problem.type.name() != 'CODE'}">
-        <h2>답 입력</h2>
-        <input th:id="answer" name="answer" type="text">
+            <!-- 제출용
+                          <h3>문제 아이디</h3>
+                          <p th:text="${problem.id}"></p>
+                      -->
+            <div class="card mb-4">
+                <div class="card-header">문제 내용</div>
+                <div class="card-body">
+                    <div id="content" class="take-exam-content">
+
+                    </div>
+                </div>
+            </div>
+
+            <form id="form" th:action="@{/take/exam}" method="post">
+                <div class="form-group">
+                    <label for="answer" class="col-sm-2 col-form-label"
+                    >답 입력</label
+                    >
+                    <div>
+                        <input
+                                th:id="answer"
+                                name="answer"
+                                type="text"
+                                class="form-control"
+                                style="width: 400px"
+                        />
+                    </div>
+                </div>
+            </form>
+
+            <div class="take-exam-pagination">
+                <div th:if="${!isFirst}">
+                    <button id="prev" class="btn btn-primary">이전 문제로</button>
+                </div>
+                <p style="margin: 0">
+                    현재 문제 번호
+                    <span th:text="${problem.problemNumber}"></span>
+                </p>
+                <div th:if="${!isLast}">
+                    <button id="next" class="btn btn-primary">다음 문제로</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div th:if="${problem.type.name() == 'CODE'}">
-        <h2>코드 입력</h2>
-        <input th:id="answer" name="answer" type="text">
-        <button type="button">컴파일</button>
-        <!--    TODO: 코드 컴파일 외부 api 호출 구현 필요    -->
-        <h2>컴파일 결과</h2>
-        <textarea readonly></textarea>
-    </div>
-</form>
-<div th:if="${!isFirst}">
-    <button id="prev">이전 문제로</button>
-</div>
-<div>
-    <h2>현재 문제 번호</h2>
-    <p th:text="${problem.problemNumber}"></p>
-</div>
-<div th:if="${!isLast}">
-    <button id="next">다음 문제로</button>
+    <!-- Sidebar - Brand -->
+    <ul
+            id="take-exam-sidebar"
+            class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+            style="flex: 1"
+    >
+        <div
+                class="sidebar-brand d-flex align-items-center justify-content-center"
+        >
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">kitpa</div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0" />
+
+        <!-- Nav Item - Dashboard -->
+        <li
+                class="py-3 nav-item active justify-content-center d-flex align-items-center gap-3 flex-column"
+        >
+            <div>
+                <i
+                        class="fas fa-hourglass-half text-body-emphasis"
+                        style="color: #fff"
+                ></i>
+                <span style="color: #fff">남은 시간</span>
+            </div>
+
+            <div
+                    id="time-remaining"
+                    class="fs-3"
+                    style="color: #e5d283; font-weight: bold"
+            >
+
+            </div>
+        </li>
+
+        <hr class="sidebar-divider" />
+
+        <!-- Nav Item - Dashboard -->
+        <li
+                class="py-3 nav-item active justify-content-center d-flex align-items-center gap-3 flex-column"
+        >
+            <div>
+                <span style="color: #fff">문제 목록</span>
+            </div>
+
+            <div class="fs-3" style="color: #2b2b2b; font-weight: bold">
+                <div
+                        style="display: inline-block"
+                        th:each="oneProblemNumer : ${problemNumberList}"
+                >
+                    <a th:href="@{/take/exam(problemNumber=${oneProblemNumer})}"
+                    ><span
+                            th:text="|${oneProblemNumer}&nbsp|"
+                            class="d-block px-5 text-break"
+                    ></span
+                    ></a
+                    >
+                </div>
+            </div>
+        </li>
+
+        <hr class="sidebar-divider" />
+
+        <div class="take-exam-sidebar-button">
+            <div class="btn">시험 종료</div>
+        </div>
+    </ul>
+    <!-- End of Sidebar -->
 </div>
 
 <script th:inline="javascript">
-    $(document).ready(()=>{
-        $("#prev, #next").click((event)=>{
-            const id = event.target.id;
-            let form = $("#form")
-            form.append($("<input/>", {type:"hidden", name:"problemNumber", value: /*[[${problem.problemNumber}]]*/""}));
-            form.append($("<input/>", {type:"hidden", name:"direction", value: id}));
-            form.submit();
-        })
-    })
-    //남은 시간
-    let endDateStr = /*[[${#temporals.format(endDate,'yyyy-MM-dd HH:mm:ss')}]]*/"";
-    let endDate = new Date(endDateStr);
-    let now = new Date();
+      $(document).ready(() => {
+        $('#prev, #next').click((event) => {
+          const id = event.target.id;
+          let form = $('#form');
+          form.append(
+            $('<input/>', {
+              type: 'hidden',
+              name: 'problemNumber',
+              value: /*[[${problem.problemNumber}]]*/ '',
+            })
+          );
+          form.append(
+            $('<input/>', { type: 'hidden', name: 'direction', value: id })
+          );
+          form.submit();
+        });
+      });
+      //남은 시간
+      let endDateStr =
+        /*[[${#temporals.format(endDate,'yyyy-MM-dd HH:mm:ss')}]]*/ '';
+      let endDate = new Date(endDateStr);
+      let now = new Date();
 
-    let gap = endDate.getTime() - now.getTime();
+      let gap = endDate.getTime() - now.getTime();
 
-    setInterval(() => {
+      setInterval(() => {
         let calc = gap;
 
-        let h = Math.ceil(calc / (1000 * 60 * 60))
+        let h = Math.ceil(calc / (1000 * 60 * 60));
         calc = calc % (1000 * 60 * 60);
 
         let m = Math.ceil(calc / (1000 * 60));
         calc = calc % (1000 * 60);
 
-        let s = Math.ceil(calc / (1000));
+        let s = Math.ceil(calc / 1000);
 
-        $("#time-remaining").text(`${h}:${m}:${s - 1}`)
+        $('#time-remaining').text(`${h}:${m}:${s - 1}`);
         gap = gap - 1000;
-    }, 1000)
+      }, 1000);
 
-    //문제 내용
-    document.getElementById('content').innerHTML =
-        marked.parse(/*[[${problem.content}]]*/"");
-</script>
+      //문제 내용
+      document.getElementById('content').innerHTML = marked.parse(
+        /*[[${problem.content}]]*/ ''
+      );
+    </script>
 </body>
 </html>
