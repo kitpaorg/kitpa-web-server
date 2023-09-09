@@ -2,10 +2,13 @@ package com.kitpa.kitpaserver.service;
 
 import com.kitpa.kitpaserver.dto.ProblemDeployDto;
 import com.kitpa.kitpaserver.dto.ProblemDto;
+import com.kitpa.kitpaserver.dto.SolveDto;
 import com.kitpa.kitpaserver.entity.Account;
+import com.kitpa.kitpaserver.entity.AccountProblem;
 import com.kitpa.kitpaserver.entity.Exam;
 import com.kitpa.kitpaserver.entity.Problem;
 import com.kitpa.kitpaserver.form.TakeExamPreForm;
+import com.kitpa.kitpaserver.repository.AccountProblemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -33,6 +37,7 @@ public class TakeExamService {
     private final ExamService examService;
     private final ProblemService problemService;
     private final ModelMapper mapper;
+    private final AccountProblemRepository accountProblemRepository;
 
     @Transactional
     public void registerPreData(String userId, TakeExamPreForm form) {
@@ -80,7 +85,7 @@ public class TakeExamService {
         return examService.getExamEntity(examId);
     }
 
-    public ProblemDeployDto examDeploy(String userId, Long problemNumber) {
+    public ProblemDeployDto examDeploy(String userId, Integer problemNumber) {
         Exam exam = findExamByAccount(userId);
         Problem problem = problemService.getProblemByExamAndProblemNumber(exam, problemNumber);
         return mapper.map(problem, ProblemDeployDto.class);
@@ -102,5 +107,24 @@ public class TakeExamService {
         LocalDateTime now = LocalDateTime.now();
         Exam exam = findExamByAccount(userId);
         return now.isBefore(exam.getEndDate());
+    }
+
+    @Transactional
+    public void submit(String userId, SolveDto solveDto) {
+        Account account = accountLookupService.getAccountEntityByUserId(userId);
+        AccountProblem accountProblem = accountProblemRepository.findByUserIdAndProblemNumber(userId, solveDto.getProblemNumber())
+                .orElseGet(() -> AccountProblem.create(solveDto.getProblemNumber(), solveDto.getAnswer(), account));
+        accountProblem.setAnswer(solveDto.getAnswer());
+
+        accountProblemRepository.save(accountProblem);
+    }
+
+    public String getAnswerIfExists(String userId, Integer problemNumber) {
+        AccountProblem accountProblem = accountProblemRepository.findByUserIdAndProblemNumber(userId, problemNumber)
+                .orElse(null);
+        if (accountProblem != null) {
+            return accountProblem.getAnswer();
+        }
+        return null;
     }
 }

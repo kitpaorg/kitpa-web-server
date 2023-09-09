@@ -13,5 +13,5 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
     List<Problem> findByIdIn(List<Long> id);
     Page<Problem> findPageBy(Pageable pageable);
 
-    Optional<Problem> findProblemByExamAndProblemNumber(Exam exam, Long problemNumber);
+    Optional<Problem> findProblemByExamAndProblemNumber(Exam exam, Integer problemNumber);
 }

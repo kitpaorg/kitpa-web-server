@@ -56,7 +56,7 @@ public class AccountRegisterService {
                 accountForm.getUserId(),
                 accountForm.getRealName(),
                 accountForm.getPhoneNumber(),
-                passwordEncoder.encode(genPass),
+                passwordEncoder.encode("qwer"),
                 accountForm.getSchool(),
                 accountForm.getAddress(),
                 accountForm.getExam());

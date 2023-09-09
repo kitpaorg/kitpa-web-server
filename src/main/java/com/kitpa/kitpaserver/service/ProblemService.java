@@ -46,7 +46,7 @@ public class ProblemService {
         return mapper.map(problem, ProblemDto.class);
     }
 
-    public Problem getProblemByExamAndProblemNumber(Exam exam, Long problemNumber) {
+    public Problem getProblemByExamAndProblemNumber(Exam exam, Integer problemNumber) {
         return repository.findProblemByExamAndProblemNumber(exam, problemNumber)
                 .orElseThrow(NotFoundException::new);
     }

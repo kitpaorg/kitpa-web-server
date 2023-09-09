@@ -50,7 +50,6 @@ public class SecurityConfig {
     @Order(0)
     public SecurityFilterChain adminFilterChain(HttpSecurity http,
                                                 @Qualifier("adminAuthenticationProvider") AuthenticationProvider adminAuthenticationProvider) throws Exception {
-
         http
                 .authenticationProvider(adminAuthenticationProvider)
                 .antMatcher("/admin/**")
@@ -61,13 +60,13 @@ public class SecurityConfig {
                         form
                                 .loginPage("/admin/accounts/login")
                                 .loginProcessingUrl("/admin/accounts/admin_login")
-                                .defaultSuccessUrl("/admin", true)
+                                .defaultSuccessUrl("/", true)
                                 .failureUrl("/admin/accounts/login?error=true")
                                 .permitAll())
                 .logout(logout ->
                         logout
-                                .logoutUrl("/admin/accounts/logout")
-                                .logoutSuccessUrl("/admin/accounts/login")
+                                .logoutUrl("/accounts/logout")
+                                .logoutSuccessUrl("/")
                                 .deleteCookies("JSESSIONID"));
         return http.build();
     }
@@ -97,18 +96,6 @@ public class SecurityConfig {
                                 .logoutSuccessUrl("/")
                                 .deleteCookies("JSESSIONID")
                 );
-
-//                .and()
-//
-//                .authorizeRequests()
-//                .antMatchers("/admin/**")
-//                .hasRole("ADMIN")
-//
-//                .and()
-//
-//                .authorizeRequests()
-//                .antMatchers("/**")
-//                .hasRole("USER");
         return http.build();
     }
 

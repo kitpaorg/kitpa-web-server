@@ -10,6 +10,7 @@ import com.kitpa.kitpaserver.form.TakeExamPreForm;
 import com.kitpa.kitpaserver.service.TakeExamService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,7 +36,7 @@ public class TakeExamController {
     private final TakeExamService takeExamService;
 
     @GetMapping("/exam")
-    public String takeExamView(@CurrentUserId String userId, @RequestParam Long problemNumber, Model model) {
+    public String takeExamView(@CurrentUserId String userId, @RequestParam Integer problemNumber, Model model) {
         if(!takeExamService.canEnterExam(userId)){
             return "take-exam/cannot-enter-exam";
         }
@@ -47,8 +48,14 @@ public class TakeExamController {
                 .sorted()
                 .collect(Collectors.toList());
 
+        String answer = takeExamService.getAnswerIfExists(userId, problemNumber);
+
         Integer firstNumber = problemNumberList.get(0);
         Integer lastNumber = problemNumberList.get(problemNumberList.size() - 1);
+
+        if(StringUtils.isNotBlank(answer)){
+            model.addAttribute("answer", answer);
+        }
 
         model.addAttribute("problem", problem);
         model.addAttribute("problemNumber", problem.getProblemNumber());
@@ -80,11 +87,11 @@ public class TakeExamController {
 
     @PostMapping("/exam")
     public String takeExam(@CurrentUserId String userId, @ModelAttribute SolveDto solveDto, RedirectAttributes redirectAttributes){
-        //TODO: 마지막 문제인지 확인해서 마지막 문제면 제출 완료 로직으로 빠져야함
-        //TODO: 사용자가 입력한 답을 저장하는 로직 작성
         if(!takeExamService.canSubmit(userId)){
             return "redirect:/take/exam-finish";
         }
+
+        takeExamService.submit(userId, solveDto);
 
         if (solveDto.getDirection().equals("next")) {
             redirectAttributes.addAttribute("problemNumber", solveDto.getProblemNumber() + 1);
@@ -92,6 +99,17 @@ public class TakeExamController {
             redirectAttributes.addAttribute("problemNumber", solveDto.getProblemNumber() - 1);
         }
         return "redirect:/take/exam";
+    }
+
+    @PostMapping("/exam/submit")
+    public String submitExam(@CurrentUserId String userId, @ModelAttribute SolveDto solveDto) {
+        if(!takeExamService.canSubmit(userId)){
+            return "redirect:/take/exam-finish";
+        }
+
+        takeExamService.submit(userId, solveDto);
+
+        return "redirect:/take/exam-finish";
     }
 
     @GetMapping("/exam-finish")

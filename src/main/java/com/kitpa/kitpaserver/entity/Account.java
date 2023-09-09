@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -30,6 +33,9 @@ public class Account extends BaseTimeEntity{
     private String identityPhoto;
     private Boolean privacyCheck;
     private Long exam;
+
+    @OneToMany(mappedBy = "account")
+    private List<AccountProblem> accountProblems = new ArrayList<>();
 
     public static Account createAccount(String email, String userId, String realName, String phoneNumber, String password, String school, String address, Long exam) {
         Account account = new Account();
