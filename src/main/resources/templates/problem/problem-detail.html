@@ -146,45 +146,6 @@
         </div>
     </div>
 </div>
-
-<!--원본
-<h1>문제 상세 보기</h1>
-    <div>
-        <h3>id</h3>
-        <p th:text="${problem.id}"></p>
-    </div>
-    <div>
-        <h3>problemNumber</h3>
-        <p th:text="${problem.problemNumber}"></p>
-    </div>
-    <div>
-        <h3>title</h3>
-        <p th:text="${problem.title}"></p>
-    </div>
-    <div>
-        <h3>score</h3>
-        <p th:text="${problem.maxScore}"></p>
-    </div>
-    <div>
-        <h3>type</h3>
-        <p th:text="${problem.type}"></p>
-    </div>
-    <div>
-        <h3>answer</h3>
-        <p th:text="${problem.answer}"></p>
-    </div>
-    <div>
-        <h3>content</h3>
-        <div style="border:2px solid black">
-        <div id="content"></div>
-        </div>
-    </div>
-    <a th:href="@{/admin/problems/list}">문제 목록</a>
-    <script th:inline="javascript">
-        document.getElementById('content').innerHTML =
-            marked.parse(/*[[${problem.content}]]*/"");
-    </script>
--->
 <script th:inline="javascript">
         document.getElementById('content').innerHTML =
             marked.parse(/*[[${problem.content}]]*/"");

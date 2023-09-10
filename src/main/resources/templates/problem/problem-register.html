@@ -31,78 +31,7 @@
 <body id="page-top">
 <!-- Page Wrapper -->
 <div id="wrapper">
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-        <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
-            </div>
-            <div class="sidebar-brand-text mx-3">kitpa</div>
-        </a>
-
-        <!-- User Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Nav Item - Dashboard -->
-        <li sec:authorize="!isAuthenticated()" class="nav-item active">
-            <a th:href="@{/accounts/login}" class="nav-link">
-                <i class="fas fa-fw fa-folder"></i>
-                <span>로그인</span></a>
-        </li>
-
-        <li sec:authorize="isAuthenticated()" class="nav-item active">
-            <a href="javascript:void(0)" onClick="javascript:logout()"class="nav-link">
-                <i class="fas fa-fw fa-folder"></i>
-                <span>로그아웃</span></a>
-        </li>
-
-        <li class="nav-item active">
-            <a class="nav-link" th:href="@{/take/take-exam-pre}">
-                <i class="fas fa-running"></i>
-                <span>시험 입장</span></a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Admin Heading -->
-        <div sec:authorize="hasRole('ROLE_ADMIN')">
-            <div class="sidebar-heading">
-                Admin
-            </div>
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/admin/accounts/bulk-register}">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>계정 벌크 생성</span></a>
-            </li>
-
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/admin/problems/register}">
-                    <i class="fas fa-sticky-note"></i>
-                    <span>문제 등록</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/admin/problems/list}">
-                    <i class="fas fa-sticky-note"></i>
-                    <span>문제 목록</span></a>
-            </li>
-
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/admin/exams/register}">
-                    <i class="fas fa-university"></i>
-                    <span>시험 등록</span></a>
-            </li>
-
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/admin/exams/list}">
-                    <i class="fas fa-university"></i>
-                    <span>시험 목록</span></a>
-            </li>
-        </div>
-    </ul>
-    <!-- End of Sidebar -->
+    <div th:insert="~{/common/nav :: sideBar}"></div>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -176,53 +105,6 @@
         </div>
     </div>
 </div>
-
-<!--원본
- <h1>문제 등록 페이지</h1>
-    <form th:action="@{/admin/problems/register}" th:object="${problem}" th:method="POST">
-        <div>
-            <label th:for="problemNumber">문제 번호</label>
-            <input th:field="*{problemNumber}" type="text">
-        </div>
-        <div>
-            <label th:for="title">문제 제목</label>
-            <input th:field="*{title}" type="text">
-        </div>
-        <div>
-            <label th:for="maxScore">문제 점수</label>
-            <input th:field="*{maxScore}" type="text">
-        </div>
-        <div>
-            <label th:for="type">문제 형식</label>
-            <select th:field="*{type}" id="mySelect" name="mySelect">
-                <option value="MULTIPLE">객관식</option>
-                <option value="SHORT">단답형</option>
-                <option value="BLANK">빈칸채우기</option>
-                <option value="CODE">코드작성</option>
-            </select>
-        </div>
-        <div>
-            <label th:for="answer">문제 답</label>
-            <input th:field="*{answer}" type="text">
-        </div>
-        <div>
-            <label th:for="content">문제 본문</label>
-            <textarea id="content" name="content"></textarea>
-        </div>
-        <button type="submit">등록</button>
-    </form>
-    <script>
-        new SimpleMDE({
-            element: document.getElementById("content"),
-            toolbar: false,
-            indentWithTabs: false,
-            renderingConfig: {
-                singleLineBreaks: false,
-                codeSyntaxHighlighting: true,
-            }
-        });
-    </script>
--->
 
 <script>
         new SimpleMDE({
