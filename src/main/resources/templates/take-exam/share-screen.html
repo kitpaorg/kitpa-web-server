@@ -27,15 +27,17 @@
         <!-- Main Content -->
         <div id="content" class="p-5 vh-100">
             <div id="container">
-                <h1 class="h3 mb-4 text-gray-800">시험 화면 공유</h1>
-
                 <div class="share-screen-video-box">
+                    <h1 class="mt-5 h3 mb-4 text-gray-800">시험 화면 공유</h1>
+                    <p>시험을 치루는 동안 자신의 화면을 공유하고 시험 문제 탭으로 전환하세요. <br/>화면을 공유하지 않고 시험을 치룰 시 불이익에 대한 책임은 수험자 본인에게 있습니다.</p>
                     <video class="shadow p-3 mb-5 bg-white rounded" id="gum-local" autoplay playsinline muted></video>
+                    <div class="d-grid gap-2">
+                        <button id="startButton" class="btn btn- btn-primary"><i class="fas fa-video mr-2"></i> 화면 공유 시작</button>
+                    </div>
                 </div>
-                <button id="startButton" class="btn btn-primary"><i class="fas fa-video mr-2"></i> Start</button>
+
                 <div id="errorMsg" class="mt-2"></div>
                 <div id="displaySurface"></div>
-
             </div>
         </div>
     </div>

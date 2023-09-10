@@ -6,12 +6,17 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
             integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link th:href="@{/css/admin-front.css}" rel="stylesheet">
 </head>
 <body id="page-top">
@@ -24,40 +29,43 @@
         <!-- Main Content -->
         <div id="content" class="p-5">
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">시험 응시 전</h1>
+                <h1 class="h3 mb-0 text-gray-800">시험 응시 사전 준비</h1>
             </div>
+            <p>시험 전 미리 아래 항목을 모두 입력 후 시험에 입장하시기 바랍니다. 모든 항목이 준비되어야 시험에 입장하실 수 있습니다.</p>
             <form th:object="${form}" name="form" id="form" th:action="@{/take/take-exam-pre}" method="post"
                   enctype="multipart/form-data">
                 <div class="form-group row">
                     <label for="identity-card-photo" class="col-sm-2 col-form-label">신분증 업로드</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-5">
                         <input th:field="*{identityCardPhoto}" type="file" accept="image/*" id="identity-card-photo"
                                name="identityCardPhoto" class="form-control">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="self-photo" class="col-sm-2 col-form-label">본인 얼굴 업로드</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-5">
                         <input th:field="*{selfPhoto}" type="file" accept="image/*" id="self-photo" name="selfPhoto"
                                class="form-control">
                     </div>
                 </div>
-                <div class="form-check">
-                    <label class="form-check-label" for="privacy-check">개인 정보 동의</label>
-                    <input th:field="*{privacyCheck}" class="form-check-input" type="checkbox" id="privacy-check"
-                           name="privacyCheck">
+                <div class="form-group row">
+                    <label class="form-check-label col-sm-2 col-form-label" for="privacy-check">개인 정보 이용 동의</label>
+                    <div class="col-sm-5">
+                        <input th:field="*{privacyCheck}" class="form-check-input" type="checkbox"
+                               id="privacy-check"
+                               name="privacyCheck">
+                    </div>
                 </div>
 
                 <div id="takeExamPre">
-                    <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card col-7 border-left-primary shadow h-100 py-2">
                         <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div
-                                            class="text-xs font-weight-bold text-primary text-uppercase mb-1"
-                                    >
+                            <div class="row no-gutters align-items-start">
+                                <div class="col-5 mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                         시험 시간 동안 화면 공유
                                     </div>
+                                    <p>화면 공유를 해야만 시험 입장이 가능합니다.</p>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                                         <a class="btn btn-secondary" target="_blank" id="screen-share"
                                            th:href="@{/take/share-screen}">
@@ -73,7 +81,7 @@
                         </div>
                     </div>
 
-                    <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card col-7 border-left-primary shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
