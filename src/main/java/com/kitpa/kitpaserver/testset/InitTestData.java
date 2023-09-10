@@ -56,7 +56,7 @@ public class InitTestData {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime receiptIdleDate = now.minusMinutes(1L);
         examForm.setReceiptIdleDate(receiptIdleDate);
-        examForm.setStartDate(now.plusMinutes(1L));
+        examForm.setStartDate(now.plusSeconds(10L));
         examForm.setEndDate(now.plusHours(2L));
         examForm.setProblemIds(List.of(1L,2L,3L));
 

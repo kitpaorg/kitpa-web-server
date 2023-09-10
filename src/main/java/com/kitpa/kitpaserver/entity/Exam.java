@@ -47,7 +47,14 @@ public class Exam extends BaseTimeEntity {
     public boolean canEnterIdle(LocalDateTime now){
         return
                 now.isAfter(receiptIdleDate) &&
-                now.isBefore(startDate) &&
+                now.isAfter(startDate) &&
+                now.isBefore(endDate);
+    }
+
+    public boolean canReEnter(LocalDateTime now){
+        return
+                now.isAfter(receiptIdleDate) &&
+                now.isAfter(startDate) &&
                 now.isBefore(endDate);
     }
 
@@ -56,5 +63,17 @@ public class Exam extends BaseTimeEntity {
                 now.isAfter(receiptIdleDate) &&
                 now.isAfter(startDate) &&
                 now.isBefore(endDate);
+    }
+
+    public boolean isStarted(LocalDateTime now){
+        return now.isAfter(startDate);
+    }
+
+    public boolean isReadyAfter(LocalDateTime now) {
+        return now.isAfter(receiptIdleDate);
+    }
+
+    public boolean isEndAfter(LocalDateTime now){
+        return now.isAfter(endDate);
     }
 }

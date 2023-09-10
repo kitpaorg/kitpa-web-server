@@ -7,4 +7,5 @@ public class SolveDto {
     private String answer;
     private Integer problemNumber;
     private String direction;
+    private Integer selectNumber;
 }

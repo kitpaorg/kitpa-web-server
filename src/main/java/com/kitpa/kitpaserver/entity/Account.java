@@ -3,6 +3,7 @@ package com.kitpa.kitpaserver.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,6 +34,8 @@ public class Account extends BaseTimeEntity{
     private String identityPhoto;
     private Boolean privacyCheck;
     private Long exam;
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private Boolean finishExam = false;
 
     @OneToMany(mappedBy = "account")
     private List<AccountProblem> accountProblems = new ArrayList<>();
@@ -69,5 +72,13 @@ public class Account extends BaseTimeEntity{
 
     private void setIdentityPhoto(String fileName) {
         this.identityPhoto = fileName;
+    }
+
+    public void setFinishExam(Boolean finishExam) {
+        this.finishExam = finishExam;
+    }
+
+    public boolean isAdditionalWrite(){
+        return StringUtils.isNotEmpty(this.selfPhoto) && StringUtils.isNotEmpty(this.identityPhoto) && this.privacyCheck;
     }
 }

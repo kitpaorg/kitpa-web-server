@@ -1,7 +1,6 @@
 package com.kitpa.kitpaserver.service;
 
 import com.kitpa.kitpaserver.dto.ProblemDeployDto;
-import com.kitpa.kitpaserver.dto.ProblemDto;
 import com.kitpa.kitpaserver.dto.SolveDto;
 import com.kitpa.kitpaserver.entity.Account;
 import com.kitpa.kitpaserver.entity.AccountProblem;
@@ -22,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -71,12 +69,16 @@ public class TakeExamService {
 
     public boolean canEnterExam(String userId) {
         Exam exam = findExamByAccount(userId);
-        return exam.canEnterExam(LocalDateTime.now());
+        Account account = accountLookupService.getAccountEntityByUserId(userId);
+        return !account.getFinishExam() && account.isAdditionalWrite() && exam.canEnterExam(LocalDateTime.now());
     }
 
     public boolean canEnterIdle(String userId) {
         Exam exam = findExamByAccount(userId);
-        return exam.canEnterIdle(LocalDateTime.now());
+        Account account = accountLookupService.getAccountEntityByUserId(userId);
+        LocalDateTime now = LocalDateTime.now();
+
+        return !account.isAdditionalWrite() && !account.getFinishExam() && exam.canEnterIdle(now);
     }
 
     private Exam findExamByAccount(String userId) {
@@ -106,7 +108,18 @@ public class TakeExamService {
     public boolean canSubmit(String userId) {
         LocalDateTime now = LocalDateTime.now();
         Exam exam = findExamByAccount(userId);
-        return now.isBefore(exam.getEndDate());
+
+        //제출시마다 시간 및 계정 valid 해야됨
+        return !exam.isEndAfter(now);
+    }
+    @Transactional
+    public void submitFinish(String userId, SolveDto solveDto) {
+        Account account = accountLookupService.getAccountEntityByUserId(userId);
+        AccountProblem accountProblem = accountProblemRepository.findByUserIdAndProblemNumber(userId, solveDto.getProblemNumber())
+                .orElseGet(() -> AccountProblem.create(solveDto.getProblemNumber(), solveDto.getAnswer(), account));
+        accountProblem.setAnswer(solveDto.getAnswer());
+        account.setFinishExam(true);
+        accountProblemRepository.save(accountProblem);
     }
 
     @Transactional
@@ -126,5 +139,17 @@ public class TakeExamService {
             return accountProblem.getAnswer();
         }
         return null;
+    }
+
+    public boolean canReEnter(String userId) {
+        Account account = accountLookupService.getAccountEntityByUserId(userId);
+        Exam exam = findExamByAccount(userId);
+        LocalDateTime now = LocalDateTime.now();
+        return account.isAdditionalWrite() && exam.canReEnter(now);
+    }
+
+    public boolean isFinishedAccount(String userId) {
+        Account account = accountLookupService.getAccountEntityByUserId(userId);
+        return account.getFinishExam();
     }
 }
