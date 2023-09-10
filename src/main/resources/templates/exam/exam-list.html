@@ -60,9 +60,9 @@
                             </thead>
 
                             <tbody>
-                            <tr th:each="problem, idx : ${problems}">
-                                <th scope="row">
-                                    <p th:text="${exam.id}">1</p></a>
+                            <tr th:each="exam, idx : ${exams}">
+                                <td scope="row">
+                                    <a th:href="@{/admin/exams/{id}/detail(id=${exam.id})}"><p th:text="${exam.id}">1</p></a>
                                 </td>
                                 <td>
                                     <p th:text="${exam.title}"></p>
@@ -92,44 +92,6 @@
             </div>
         </div>
     </div>
-</div>
-
-<!-- 원본 -->
-<a th:href="@{/admin/exams/register}">시험 등록</a>
-<table>
-    <thead>
-    <tr>
-        <th>id</th>
-        <th>title</th>
-        <th>receiptIdleDate</th>
-        <th>startDate</th>
-        <th>endDate</th>
-    </tr>
-    </thead>
-    <tr th:each="exam, idx : ${exams}">
-        <td>
-            <p th:text="${exam.id}"></p>
-        </td>
-        <td>
-            <p th:text="${exam.title}"></p>
-        </td>
-        <td>
-            <p th:text="${#temporals.format(exam.receiptIdleDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
-        </td>
-        <td>
-            <p th:text="${#temporals.format(exam.startDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
-        </td>
-        <td>
-            <p th:text="${#temporals.format(exam.endDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
-        </td>
-        <td>
-    </tr>
-</table>
-<div th:if="${exams.totalPages > 0}" class="pagination"
-     th:each="pageNumber : ${pageNumbers}">
-    <a th:href="@{/admin/exams/list(size=${exams.size}, page=${pageNumber})}"
-       th:text="${pageNumber}"
-       th:class="${pageNumber==exams.number + 1} ? active"></a>
 </div>
 </body>
 

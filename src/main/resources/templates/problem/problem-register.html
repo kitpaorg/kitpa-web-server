@@ -27,6 +27,8 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 </head>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -47,7 +49,7 @@
                 <!-- Content Row -->
                 <div class="row">
                     <!-- Earnings (Monthly) Card Example -->
-                    <form>
+                    <form th:action="@{/admin/problems/register}" method="post">
                         <div class="form-group row">
                             <label for="problemNumber" class="col-sm-2 col-form-label">문제 번호</label>
                             <div class="col-sm-10">
@@ -105,7 +107,7 @@
         </div>
     </div>
 </div>
-
+<th:block th:replace="~{common/script::logout}"></th:block>
 <script>
         new SimpleMDE({
             element: document.getElementById("content"),
@@ -114,7 +116,8 @@
             renderingConfig: {
                 singleLineBreaks: false,
                 codeSyntaxHighlighting: true,
-            }
+            },
+            spellChecker: false,
         });
     </script>
 </body>

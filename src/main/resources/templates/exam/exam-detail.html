@@ -42,38 +42,38 @@
             <h1>시험 상세 보기</h1>
             <div>
                 <div>
-                    <h3>id</h3>
+                    <h3>시험 유일키</h3>
                     <p th:text="${exam.id}"></p>
                 </div>
                 <div>
-                    <h3>title</h3>
+                    <h3>시험 제목</h3>
                     <p th:text="${exam.title}"></p>
                 </div>
                 <div>
-                    <h3>receiptIdleDate</h3>
+                    <h3>시험 입장 대기 시간</h3>
                     <p th:text="${#temporals.format(exam.receiptIdleDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
                 </div>
                 <div>
-                    <h3>startDate</h3>
+                    <h3>시험 시작 시간</h3>
                     <p th:text="${#temporals.format(exam.startDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
                 </div>
                 <div>
-                    <h3>endDate</h3>
+                    <h3>시험 종료 시간</h3>
                     <p th:text="${#temporals.format(exam.endDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
                 </div>
             </div>
             <div>
                 <h2>포함 문제 목록</h2>
-                <table>
+                <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th>id</th>
-                        <th>problemNumber</th>
-                        <th>title</th>
-                        <th>score</th>
-                        <th>type</th>
-                        <th>answer</th>
-                        <th>content</th>
+                        <th scope="col">유일키</th>
+                        <th scope="col">번호</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">점수</th>
+                        <th scope="col">종류</th>
+                        <th scope="col">답</th>
+                        <th scope="col">내용</th>
                     </tr>
                     </thead>
                     <tr th:each="problem, idx : ${exam.problems}">
@@ -90,7 +90,9 @@
                             <p th:text="${problem.maxScore}"></p>
                         </td>
                         <td>
-                            <p th:text="${problem.type}"></p>
+                            <p th:if="${problem.type.name().equals('MULTIPLE')}" th:text="객관식"></p>
+                            <p th:if="${problem.type.name().equals('SHORT')}" th:text="단답형"></p>
+                            <p th:if="${problem.type.name().equals('BLANK')}" th:text="빈칸채우기"></p>
                         </td>
                         <td>
                             <p th:text="${problem.answer}"></p>

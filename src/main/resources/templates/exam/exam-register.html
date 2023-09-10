@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Kitpa | 시험 등록</title>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
@@ -19,7 +21,7 @@
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet"
     />
-    <link th:href="@{/css/admin-front.css}" rel="stylesheet" />
+    <link th:href="@{/css/admin-front.css}" rel="stylesheet"/>
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
@@ -27,6 +29,8 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -46,7 +50,7 @@
             <!-- Exam-register-form -->
             <div class="row">
                 <!-- Earnings (Monthly) Card Example -->
-                <form id="form-register" th:action="@{/exams/register}" th:object="${exam}" th:method="POST">
+                <form id="form-register" th:action="@{/admin/exams/register}" th:object="${exam}" th:method="POST">
                     <div class="form-group row">
                         <label for="title" class="col-sm-2 col-form-label">시험 제목</label>
                         <div class="col-sm-10">
@@ -57,7 +61,8 @@
                     <div class="form-group row">
                         <label for="receiptIdleDate" class="col-sm-2 col-form-label">시험 접수 대기 시간</label>
                         <div class="col-sm-10">
-                            <input type="datetime-local" id="receiptIdleDate" name="receiptIdleDate" class="form-control">
+                            <input type="datetime-local" id="receiptIdleDate" name="receiptIdleDate"
+                                   class="form-control">
                         </div>
                     </div>
 
@@ -77,8 +82,10 @@
 
 
                     <div class="form-group row">
-                        <label for="input-problemIds" class="col-sm-2 col-form-label">포함 시킬 문제</label>
-                        <div class="col-sm-10">
+                        <label for="input-problemIds" class="col-sm-3 col-form-label">포함 시킬 문제 <strong>(문제의 id 를 ',' 쉼표로
+                            구분해 넣어주세요)</strong></label>
+                        <small>ex) 1,2,3,4,5,6</small>
+                        <div class="col-sm-12">
                             <input type="text" id="input-problemIds" name="input-problemIds" class="form-control">
                         </div>
                     </div>
@@ -91,7 +98,7 @@
             <!-- Problem list -->
             <div class="row mt-2">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table id="problem-table" class="table table-bordered">
                         <thead>
                         <tr>
                             <th scope="col">id</th>
@@ -100,95 +107,228 @@
                             <th scope="col">score</th>
                             <th scope="col">type</th>
                             <th scope="col">answer</th>
+                            <th scope="col">content</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        <tr th:each="problem, idx : ${problems}">
-                            <th scope="row">
-                                <a th:href="@{/problems/{id}/detail(id=${problem.id})}"><p th:text="${problem.id}">1</p></a>
-                            </td>
-                            <td>
-                                <p th:text="${problem.problemNumber}">1</p>
-                            </td>
-                            <td>
-                                <p th:text="${problem.title}">2</p>
-                            </td>
-                            <td>
-                                <p th:text="${problem.maxScore}">3</p>
-                            </td>
-                            <td>
-                                <p th:text="${problem.type}">4</p>
-                            </td>
-                            <td>
-                                <p th:text="${problem.answer}">5</p>
-                            </td>
-                        </tr>
+
+                        <!--                        <tr th:each="problem, idx : ${problems}">-->
+                        <!--                            <td scope="row">-->
+                        <!--                                <a th:href="@{/admin/problems/{id}/detail(id=${problem.id})}">-->
+                        <!--                                    <p th:text="${problem.id}">1</p>-->
+                        <!--                                </a>-->
+                        <!--                            </td>-->
+                        <!--                            <td>-->
+                        <!--                                <p th:text="${problem.problemNumber}">1</p>-->
+                        <!--                            </td>-->
+                        <!--                            <td>-->
+                        <!--                                <p th:text="${problem.title}">2</p>-->
+                        <!--                            </td>-->
+                        <!--                            <td>-->
+                        <!--                                <p th:text="${problem.maxScore}">3</p>-->
+                        <!--                            </td>-->
+                        <!--                            <td>-->
+                        <!--                                <p th:text="${problem.type}">4</p>-->
+                        <!--                            </td>-->
+                        <!--                            <td>-->
+                        <!--                                <p th:text="${problem.answer}">5</p>-->
+                        <!--                            </td>-->
+                        <!--                        </tr>-->
                         </tbody>
                     </table>
                 </div>
 
-                <div th:if="${problems.totalPages > 0}" class="pagination"
-                     th:each="pageNumber : ${pageNumbers}">
-                    <a th:href="@{/problems/list(size=${problems.size}, page=${pageNumber})}"
-                       th:text="${pageNumber}"
-                       th:class="${pageNumber==problems.number + 1} ? active"></a>
-                </div>
+                <ul class="pagination justify-content-center" style="margin:20px 0; cursor: pointer;">
+                </ul>
+
+                <!--                <div th:if="${problems.totalPages > 0}" class="pagination"-->
+                <!--                     th:each="pageNumber : ${pageNumbers}">-->
+                <!--                    <a th:href="@{/admin/api/v1/problems/list(size=${problems.size}, page=${pageNumber})}"-->
+                <!--                       th:text="${pageNumber}"-->
+                <!--                       th:class="${pageNumber==problems.number + 1} ? active"></a>-->
+                <!--                </div>-->
             </div>
-        </div>
         </div>
     </div>
 </div>
+</div>
+<th:block th:replace="~{common/script::logout}"></th:block>
+<script th:inline="javascript" type="text/javascript">
+    $(document).ready(function() {
+        let totalPages = 1;
 
-<!-- 원본 -->
-<!--<h1>시험 등록 페이지</h1>-->
-<!--<form id="form-register" th:action="@{/admin/exams/register}" th:object="${exam}" th:method="POST">-->
-<!--    <div>-->
-<!--        <label th:for="title">시험 제목</label>-->
-<!--        <input th:field="*{title}" type="text">-->
-<!--    </div>-->
-<!--    <div>-->
-<!--        <label th:for="receiptIdleDate">시험 접수 대기 시간</label>-->
-<!--        <input th:field="*{receiptIdleDate}" type="datetime-local">-->
-<!--    </div>-->
-<!--    <div>-->
-<!--        <label th:for="startDate">시험 시작 시간</label>-->
-<!--        <input th:field="*{startDate}" type="datetime-local">-->
-<!--    </div>-->
-<!--    <div>-->
-<!--        <label th:for="endDate">시험 종료 시간</label>-->
-<!--        <input th:field="*{endDate}" type="datetime-local">-->
-<!--    </div>-->
-<!--    <div>-->
-<!--        <div>-->
-<!--            <label th:for="input-problemIds">포함 시킬 문제</label>-->
-<!--            <input id="input-problemIds" name="input-problemIds" type="text">-->
-<!--            <div id="hidden-problemIds">-->
+        function fetchNotes(startPage) {
+            //console.log('startPage: ' +startPage);
+            /**
+             * get data from Backend's REST API
+             */
+            $.ajax({
+                type : "GET",
+                url : /*[[@{/admin/api/v1/problems/list}]]*/'',
+                data: {
+                    page: startPage,
+                    size: 10
+                },
+                //
+                success: function(response){
+                    $('#problem-table tbody').empty();
+                    // add table rows
+                    $.each(response.data, (i, problem) => {
+                        let noteRow = '<tr>' +
+                            '<td>' + problem.id + '</td>' +
+                            '<td>' + problem.problemNumber + '</td>' +
+                            '<td>' + problem.title + '</td>' +
+                            '<td>' + problem.maxScore + '</td>';
 
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <button id="btn-register" type="button">등록</button>-->
-<!--</form>-->
-<script type="text/javascript">
-        $("#btn-register").click(function(event){
-            event.preventDefault();
-            event.stopPropagation();
-            const flatProblemIds = $("#input-problemIds").val();
-            if(flatProblemIds){
-                let idsArr = flatProblemIds.split(',');
-                for(let i = 0; i < idsArr.length; i++){
-                    const newInput = $('<input>', {
-                        type: 'hidden',
-                        value: idsArr[i],
-                        name: "problemIds",
-                    })
-                    $("#hidden-problemIds").append(newInput);
+                            let typeStr = problem.type === 'MULTIPLE'? '객관식':problem.type === 'BLANK'? '빈칸채우기':problem.type==='SHORT'?'단답형':problem.type;
+                            noteRow += '<td>'+ typeStr +'</td>';
+
+
+                            noteRow += '<td>' + problem.answer + '</td>' +
+                            '<td>' + problem.content + '</td>' +
+                            '</tr>';
+                        $('#problem-table tbody').append(noteRow);
+                    });
+
+                    if ($('ul.pagination li').length - 2 != response.totalPages){
+                        // build pagination list at the first time loading
+                        $('ul.pagination').empty();
+                        buildPagination(response);
+                    }
+                },
+                error : function(e) {
+                    alert("ERROR: ", e);
+                    console.log("ERROR: ", e);
+                }
+            });
+        }
+
+        function buildPagination(response) {
+            totalPages = response.totalPages;
+
+            var pageNumber = response.currentPage;
+
+            var numLinks = 10;
+
+            // print 'previous' link only if not on page one
+            var first = '';
+            var prev = '';
+            if (pageNumber > 0) {
+                if(pageNumber !== 0) {
+                    first = '<li class="page-item"><a class="page-link">« First</a></li>';
+                }
+                prev = '<li class="page-item"><a class="page-link">‹ Prev</a></li>';
+            } else {
+                prev = ''; // on the page one, don't show 'previous' link
+                first = ''; // nor 'first page' link
+            }
+
+            // print 'next' link only if not on the last page
+            var next = '';
+            var last = '';
+            if (pageNumber < totalPages) {
+                if(pageNumber !== totalPages - 1) {
+                    next = '<li class="page-item"><a class="page-link">Next ›</a></li>';
+                    last = '<li class="page-item"><a class="page-link">Last »</a></li>';
+                }
+            } else {
+                next = ''; // on the last page, don't show 'next' link
+                last = ''; // nor 'last page' link
+            }
+
+            var start = pageNumber - (pageNumber % numLinks) + 1;
+            var end = start + numLinks - 1;
+            end = Math.min(totalPages, end);
+            var pagingLink = '';
+
+            for (var i = start; i <= end; i++) {
+                if (i == pageNumber + 1) {
+                    pagingLink += '<li class="page-item active"><a class="page-link"> ' + i + ' </a></li>'; // no need to create a link to current page
+                } else {
+                    pagingLink += '<li class="page-item"><a class="page-link"> ' + i + ' </a></li>';
                 }
             }
-            $("#form-register").submit();
+
+            // return the page navigation link
+            pagingLink = first + prev + pagingLink + next + last;
+
+            $("ul.pagination").append(pagingLink);
+        }
+
+        $(document).on("click", "ul.pagination li a", function() {
+            var data = $(this).attr('data');
+            let val = $(this).text();
+            console.log('val: ' + val);
+
+            // click on the NEXT tag
+            if(val.toUpperCase() === "« FIRST") {
+                let currentActive = $("li.active");
+                fetchNotes(0);
+                $("li.active").removeClass("active");
+                // add .active to next-pagination li
+                currentActive.next().addClass("active");
+            } else if(val.toUpperCase() === "LAST »") {
+                fetchNotes(totalPages - 1);
+                $("li.active").removeClass("active");
+                // add .active to next-pagination li
+                currentActive.next().addClass("active");
+            } else if(val.toUpperCase() === "NEXT ›") {
+                let activeValue = parseInt($("ul.pagination li.active").text());
+                if(activeValue < totalPages){
+                    let currentActive = $("li.active");
+                    startPage = activeValue;
+                    fetchNotes(startPage);
+                    // remove .active class for the old li tag
+                    $("li.active").removeClass("active");
+                    // add .active to next-pagination li
+                    currentActive.next().addClass("active");
+                }
+            } else if(val.toUpperCase() === "‹ PREV") {
+                let activeValue = parseInt($("ul.pagination li.active").text());
+                if(activeValue > 1) {
+                    // get the previous page
+                    startPage = activeValue - 2;
+                    fetchNotes(startPage);
+                    let currentActive = $("li.active");
+                    currentActive.removeClass("active");
+                    // add .active to previous-pagination li
+                    currentActive.prev().addClass("active");
+                }
+            } else {
+                startPage = parseInt(val - 1);
+                fetchNotes(startPage);
+                // add focus to the li tag
+                $("li.active").removeClass("active");
+                $(this).parent().addClass("active");
+                //$(this).addClass("active");
+            }
         });
-    </script>
+
+        (function(){
+            // get first-page at initial time
+            fetchNotes(0);
+        })();
+    });
+
+    $("#btn-register").click(function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const flatProblemIds = $("#input-problemIds").val();
+        if (flatProblemIds) {
+            let idsArr = flatProblemIds.split(',');
+            for (let i = 0; i < idsArr.length; i++) {
+                const newInput = $('<input>', {
+                    type: 'hidden',
+                    value: idsArr[i],
+                    name: "problemIds",
+                })
+                $("#hidden-problemIds").append(newInput);
+            }
+        }
+        $("#form-register").submit();
+    });
+</script>
 </body>
 </html>
 

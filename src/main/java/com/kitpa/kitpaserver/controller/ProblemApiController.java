@@ -13,16 +13,3 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RequiredArgsConstructor
-@RestController
-@RequestMapping("/api/v1/problems")
-public class ProblemApiController {
-    private final ProblemService problemService;
-
-    @GetMapping("/list")
-    public ResponseEntity<PagingResponse<List<ProblemDto>>> getProblemList(@RequestParam(required = false, defaultValue = "1") Integer page,
-                                                                           @RequestParam(required = false, defaultValue = "10") Integer size){
-        Page<ProblemDto> pagedProblems = problemService.getPagedProblems(page - 1, size);
-        return ResponseEntity.ok(PagingResponse.success(pagedProblems));
-    }
-}

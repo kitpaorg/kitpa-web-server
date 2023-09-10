@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script th:inline="javascript" th:fragment="logout">
+    function logout(){
+        let i = document.createElement('input')
+        i.setAttribute('type', 'hidden');
+        i.setAttribute('name', /*[[${_csrf.parameterName}]]*/'');
+        i.setAttribute('value', /*[[${_csrf.token}]]*/'');
+
+        let f = document.createElement('form');
+        f.setAttribute('method', 'post');
+        f.setAttribute('action', '/accounts/logout');
+        f.appendChild(i);
+        document.body.appendChild(f);
+        f.submit();
+    }
+</script>
+</body>
+</html>

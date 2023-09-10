@@ -50,7 +50,7 @@ public class AdminProblemController {
     @PostMapping("/register")
     public String problemRegister(@ModelAttribute ProblemForm form) {
         ProblemDto problemDto = problemService.registerProblem(form);
-        return "redirect:/problems/" + problemDto.getId() + "/detail";
+        return "redirect:/admin/problems/" + problemDto.getId() + "/detail";
     }
 
     @PostMapping("/{id}/delete")
