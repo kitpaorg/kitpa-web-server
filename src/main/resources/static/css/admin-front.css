@@ -11273,7 +11273,7 @@
     margin: auto auto 0;
   }
 
-  .take-exam-sidebar-button .btn {
+  .take-exam-sidebar-button > .btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11305,7 +11305,7 @@
 
   .share-screen-video-box {
     margin: 0 auto;
-    max-width: 1024px;
+    max-width: 1400px;
     width: 100%;
     padding: 0 5%;
   }
