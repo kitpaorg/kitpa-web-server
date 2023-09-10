@@ -44,6 +44,7 @@ public class AccountCSVParser {
         String address = StringUtils.defaultString(csvRecord.get(3));
         String phone = StringUtils.defaultString(csvRecord.get(4));
         String userId = csvRecord.get(5);
+        String examId = csvRecord.get(6);
 
         AccountForm accountForm = new AccountForm();
         accountForm.setEmail(email);
@@ -52,6 +53,7 @@ public class AccountCSVParser {
         accountForm.setAddress(address);
         accountForm.setPhoneNumber(phone);
         accountForm.setUserId(userId);
+        accountForm.setExam(Long.parseLong(examId));
 
         return accountForm;
     }

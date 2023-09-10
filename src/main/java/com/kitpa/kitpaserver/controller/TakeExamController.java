@@ -6,7 +6,6 @@ import com.kitpa.kitpaserver.dto.SolveDto;
 import com.kitpa.kitpaserver.entity.Account;
 import com.kitpa.kitpaserver.entity.Exam;
 import com.kitpa.kitpaserver.entity.Problem;
-import com.kitpa.kitpaserver.entity.ProblemType;
 import com.kitpa.kitpaserver.form.TakeExamPreForm;
 import com.kitpa.kitpaserver.service.AccountLookupService;
 import com.kitpa.kitpaserver.service.TakeExamService;
@@ -24,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,7 +37,7 @@ public class TakeExamController {
     @GetMapping("/exam")
     public String takeExamView(@CurrentUserId String userId, @RequestParam Integer problemNumber, Model model) {
         if (!takeExamService.canEnterExam(userId)) {
-            return "take-exam/cannot-enter-exam";
+            return "error/4xx";
         }
 
         ProblemDeployDto problem = takeExamService.examDeploy(userId, problemNumber);
@@ -127,7 +124,7 @@ public class TakeExamController {
                     //시험을 마친 상태일 때
                     if (account.getFinishExam()) {
                         //이미 제출 완료한 시험입니다.
-                        return "take-exam/cannot-enter-idle";
+                        return "error/already-finish";
                     }
                     //시험을 마치지 않은 상태일 때
                     else {
@@ -138,7 +135,7 @@ public class TakeExamController {
                 //사전 정보를 입력하지 않았을 때
                 else {
                     //이미 시작된 시험입니다.
-                    return "take-exam/cannot-enter-idle";
+                    return "error/already-started";
                 }
             }
             //시험 시작 전 일 때
@@ -151,13 +148,13 @@ public class TakeExamController {
                 }
                 //시험 준비 시간 전 일 때
                 else {
-                    return "take-exam/cannot-enter-idle";
+                    return "error/cannot-enter-idle";
                 }
             }
         }
         //시험 시간이 끝난 후 일 때
         else{
-            return "take-exam/cannot-enter-idle";
+            return "error/not-exists-exam";
         }
         //시험 시작 전 일때
         //시험 준비 시간 후 일 때
