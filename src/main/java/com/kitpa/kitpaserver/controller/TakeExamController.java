@@ -188,7 +188,7 @@ public class TakeExamController {
             return "redirect:/take/exam?problemNumber=1";
         }else{
             model.addAttribute("error", "시험 시작 시간 전입니다.");
-            model.addAttribute("enterActive", false);
+            model.addAttribute("enterActive", true);
             return "/take-exam/take-exam-pre";
         }
     }
