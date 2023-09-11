@@ -48,7 +48,7 @@ public class AdminExamController {
     @PostMapping("/register")
     public String examRegister(@ModelAttribute ExamForm examForm) {
         ExamDto examDto = examService.registerExam(examForm);
-        return "redirect:/exams/"+examDto.getId()+"/detail";
+        return "redirect:/admin/exams/"+examDto.getId()+"/detail";
     }
 
     @PostMapping("/{id}/delete")
