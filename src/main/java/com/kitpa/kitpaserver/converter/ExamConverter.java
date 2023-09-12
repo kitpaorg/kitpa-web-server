@@ -17,7 +17,11 @@ public class ExamConverter extends AbstractConverter<List<Problem>, List<Problem
     @Override
     protected List<ProblemDto> convert(List<Problem> problems) {
         return problems.stream()
-                .map(p -> mapper.map(p, ProblemDto.class))
+                .map(p -> {
+                    ProblemDto map = mapper.map(p, ProblemDto.class);
+                    map.setAssigned(p.getExam() != null);
+                    return map;
+                })
                 .collect(Collectors.toList());
     }
 }

@@ -35,8 +35,18 @@ public class ProblemService {
 
     public Page<ProblemDto> getPagedProblems(Integer page, Integer size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-
         return repository.findPageBy(pageRequest)
+                .map(p -> {
+                    ProblemDto map = mapper.map(p, ProblemDto.class);
+                    map.setAssigned(p.getExam() != null);
+                    return map;
+                });
+    }
+
+    public Page<ProblemDto> getPagedProblemIfNotAssigned(Integer page, Integer size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+
+        return repository.findPageByExamIsNull(pageRequest)
                 .map(p -> mapper.map(p, ProblemDto.class));
     }
 

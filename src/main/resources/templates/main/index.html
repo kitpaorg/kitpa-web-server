@@ -27,37 +27,38 @@
     <div id="content-wrapper" class="d-flex flex-column">
 
         <!-- Main Content -->
-                <!-- Main Content -->
-                <div
-                        id="content"
-                        class="d-flex justify-content-center align-items-center p-5"
-                >
-                    <div class="row justify-content-center align-items-center">
-                        <h1 class="h3 mb-4 text-gray-800">Main Page</h1>
+        <!-- Main Content -->
+        <div
+                id="content"
+                class="d-flex justify-content-center align-items-center p-5"
+        >
+            <div class="row justify-content-center align-items-center">
+                <h1 class="h3 mb-4 text-gray-800">Main Page</h1>
 
-                        <div>
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <a th:href="@{/take/take-exam-pre}" class="link-info h5 mb-0 font-weight-bold text-gray-800">
-                                                시험 입장
-                                            </a>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-running fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
+                <div>
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <a th:href="@{/take/take-exam-pre}"
+                                       class="link-info h5 mb-0 font-weight-bold text-gray-800">
+                                        시험 입장
+                                    </a>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-running fa-2x text-gray-300"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 </div>
+
 <script th:inline="javascript">
-    function logout(){
+    function logout() {
         let i = document.createElement('input')
         i.setAttribute('type', 'hidden');
         i.setAttribute('name', /*[[${_csrf.parameterName}]]*/'');

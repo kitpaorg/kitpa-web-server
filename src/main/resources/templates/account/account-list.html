@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Kitpa | 문제 목록</title>
+    <title>Kitpa | 계정 목록</title>
     <meta charset="UTF-8"/>
     <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
@@ -38,10 +38,7 @@
         <!-- Main Content -->
         <div id="content" class="p-5">
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">문제 목록</h1>
-            <p class="mb-4"><a
-                    th:href="@{/admin/problems/register}" href="problem-register.html">문제 등록</a></p>
-
+            <h1 class="h3 mb-2 text-gray-800">계정 목록</h1>
             <!-- Content Row -->
             <div class="row">
                 <div class="table-responsive">
@@ -49,50 +46,64 @@
                         <thead>
                         <tr>
                             <th scope="col">id</th>
-                            <th scope="col">문제 번호</th>
-                            <th scope="col">제목</th>
-                            <th scope="col">점수</th>
-                            <th scope="col">타입</th>
-                            <th scope="col">답</th>
-                            <th scope="col">시험 할당 여부</th>
+                            <th scope="col">이메일</th>
+                            <th scope="col">성함</th>
+                            <th scope="col">핸드폰</th>
+                            <th scope="col">학교</th>
+                            <th scope="col">주소</th>
+                            <th scope="col">개인정보동의</th>
+                            <th scope="col">유저 아이디</th>
+                            <th scope="col">응시시험 아이디</th>
+                            <th scope="col">얼굴 파일</th>
+                            <th scope="col">신분증 파일</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        <tr th:each="problem, idx : ${problems}">
-                            <td scope="row">
-                                <a th:href="@{/admin/problems/{id}/detail(id=${problem.id})}">
-                                    <p th:text="${problem.id}">1</p>
-                                </a>
+                        <tr th:each="account, idx : ${accounts}">
+                            <td>
+                                <p th:text="${account.id}"></p>
                             </td>
                             <td>
-                                <p th:text="${problem.problemNumber}">1</p>
+                                <p th:text="${account.email}"></p>
                             </td>
                             <td>
-                                <p th:text="${problem.title}">2</p>
+                                <p th:text="${account.realName}"></p>
                             </td>
                             <td>
-                                <p th:text="${problem.maxScore}">3</p>
+                                <p th:text="${account.phoneNumber}"></p>
                             </td>
                             <td>
-                                <p th:text="${problem.type}">4</p>
+                                <p th:text="${account.school}"></p>
                             </td>
                             <td>
-                                <p th:text="${problem.answer}">5</p>
+                                <p th:text="${account.address}"></p>
                             </td>
                             <td>
-                                <p th:text="${problem.assigned}">6</p>
+                                <p th:text="${account.privacyCheck}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${account.userId}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${account.exam}"></p>
+                            </td>
+                            <td>
+                                <img th:src="@{'/admin/accounts/image/'+${account.selfPhoto}}" alt="">
+                            </td>
+                            <td>
+                                <img th:src="@{'/admin/accounts/image/'+${account.identityPhoto}}" alt="">
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div>
-                    <div th:if="${problems.totalPages > 0}" class="d-inline"
+                    <div th:if="${accounts.totalPages > 0}" class="d-inline"
                          th:each="pageNumber : ${pageNumbers}">
-                        <a th:href="@{/admin/problems/list(size=${problems.size}, page=${pageNumber})}"
+                        <a th:href="@{/admin/accounts/list(size=${accounts.size}, page=${pageNumber})}"
                            th:text="${pageNumber}"
-                           th:class="${pageNumber==problems.number + 1} ? active"></a>
+                           th:class="${pageNumber==accounts.number + 1} ? active"></a>
                     </div>
                 </div>
             </div>

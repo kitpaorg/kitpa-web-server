@@ -13,5 +13,7 @@ public class AccountDto {
     private String address;
     private String selfPhoto;
     private String identityPhoto;
+    private Boolean privacyCheck;
+    private String userId;
     private Long exam;
 }

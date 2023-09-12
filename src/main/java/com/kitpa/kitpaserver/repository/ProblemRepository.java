@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface ProblemRepository extends JpaRepository<Problem, Long> {
     List<Problem> findByIdIn(List<Long> id);
     Page<Problem> findPageBy(Pageable pageable);
-
+    Page<Problem> findPageByExamIsNull(Pageable pageable);
     Optional<Problem> findProblemByExamAndProblemNumber(Exam exam, Integer problemNumber);
 }

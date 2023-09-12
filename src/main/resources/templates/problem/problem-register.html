@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Kitpa | 시험 상세 보기</title>
+    <title>Kitpa | 문제 등록</title>
     <meta charset="UTF-8" />
     <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
@@ -72,9 +72,9 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="mySelect" class="col-sm-2 col-form-label">문제 형식</label>
+                            <label for="type" class="col-sm-2 col-form-label">문제 형식</label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="mySelect">
+                                <select class="form-control" name="type" id="type">
                                     <option value="MULTIPLE" selected>객관식</option>
                                     <option value="SHORT">단답형</option>
                                     <option value="BLANK">빈칸채우기</option>

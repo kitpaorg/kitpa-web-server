@@ -31,24 +31,27 @@
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">시험 응시 사전 준비</h1>
             </div>
-            <p>시험 전 미리 아래 항목을 모두 입력 후 시험에 입장하시기 바랍니다. 모든 항목이 준비되어야 시험에 입장하실 수 있습니다.</p>
+            <p class="mb-5">시험 전 미리 아래 항목을 모두 입력 후 시험에 입장하시기 바랍니다. 모든 항목이 준비되어야 시험에 입장하실 수 있습니다.</p>
             <form th:object="${form}" name="form" id="form" th:action="@{/take/take-exam-pre}" method="post"
                   enctype="multipart/form-data">
-                <div class="form-group row">
+                <div class="form-group row mb-5">
+                    <p>본인 신분증 업로드를 해야만 시험에 입장하실 수 있습니다.</p>
                     <label for="identity-card-photo" class="col-sm-2 col-form-label">신분증 업로드</label>
                     <div class="col-sm-5">
                         <input th:field="*{identityCardPhoto}" type="file" accept="image/*" id="identity-card-photo"
                                name="identityCardPhoto" class="form-control">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="self-photo" class="col-sm-2 col-form-label">본인 얼굴 업로드</label>
+                <div class="form-group row mb-5">
+                    <p>본인 사진이 아닐 경우 시험에 불이익이 있을 수 있으니, 반드시 본인의 얼굴 사진이 담긴 사진을 업로드하시기 바랍니다.</p>
+                    <label for="self-photo" class="col-sm-2 col-form-label">본인 얼굴 사진 업로드</label>
                     <div class="col-sm-5">
                         <input th:field="*{selfPhoto}" type="file" accept="image/*" id="self-photo" name="selfPhoto"
                                class="form-control">
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mb-5" >
+                    <p>[개인정보 보호법] 제21조에 따라 처리합니다. 수집된 개인 정보는 상장 수여 및 진위 여부 판단을 위해 사용되며 그 어떠한 다른 목적으로 사용되지 않습니다.</p>
                     <label class="form-check-label col-sm-2 col-form-label" for="privacy-check">개인 정보 이용 동의</label>
                     <div class="col-sm-5">
                         <input th:field="*{privacyCheck}" class="form-check-input" type="checkbox"

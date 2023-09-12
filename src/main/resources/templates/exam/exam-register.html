@@ -113,46 +113,15 @@
                         </thead>
 
                         <tbody>
-
-                        <!--                        <tr th:each="problem, idx : ${problems}">-->
-                        <!--                            <td scope="row">-->
-                        <!--                                <a th:href="@{/admin/problems/{id}/detail(id=${problem.id})}">-->
-                        <!--                                    <p th:text="${problem.id}">1</p>-->
-                        <!--                                </a>-->
-                        <!--                            </td>-->
-                        <!--                            <td>-->
-                        <!--                                <p th:text="${problem.problemNumber}">1</p>-->
-                        <!--                            </td>-->
-                        <!--                            <td>-->
-                        <!--                                <p th:text="${problem.title}">2</p>-->
-                        <!--                            </td>-->
-                        <!--                            <td>-->
-                        <!--                                <p th:text="${problem.maxScore}">3</p>-->
-                        <!--                            </td>-->
-                        <!--                            <td>-->
-                        <!--                                <p th:text="${problem.type}">4</p>-->
-                        <!--                            </td>-->
-                        <!--                            <td>-->
-                        <!--                                <p th:text="${problem.answer}">5</p>-->
-                        <!--                            </td>-->
-                        <!--                        </tr>-->
                         </tbody>
                     </table>
                 </div>
 
                 <ul class="pagination justify-content-center" style="margin:20px 0; cursor: pointer;">
                 </ul>
-
-                <!--                <div th:if="${problems.totalPages > 0}" class="pagination"-->
-                <!--                     th:each="pageNumber : ${pageNumbers}">-->
-                <!--                    <a th:href="@{/admin/api/v1/problems/list(size=${problems.size}, page=${pageNumber})}"-->
-                <!--                       th:text="${pageNumber}"-->
-                <!--                       th:class="${pageNumber==problems.number + 1} ? active"></a>-->
-                <!--                </div>-->
             </div>
         </div>
     </div>
-</div>
 </div>
 <th:block th:replace="~{common/script::logout}"></th:block>
 <script th:inline="javascript" type="text/javascript">

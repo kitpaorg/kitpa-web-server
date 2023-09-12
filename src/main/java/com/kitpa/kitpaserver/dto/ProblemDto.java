@@ -14,4 +14,6 @@ public class ProblemDto {
 
     private String answer;
     private Integer solveScore;
+
+    private Boolean assigned;
 }

@@ -18,10 +18,11 @@ import java.util.List;
 @RequestMapping("/admin/api/v1/problems")
 public class AdminProblemApiController {
     private final ProblemService problemService;
+
     @GetMapping("/list")
-    public ResponseEntity<PagingResponse<List<ProblemDto>>> getProblemList(@RequestParam(required = false, defaultValue = "1") Integer page,
-                                                                           @RequestParam(required = false, defaultValue = "10") Integer size) {
-        Page<ProblemDto> pagedProblems = problemService.getPagedProblems(page, size);
+    public ResponseEntity<PagingResponse<List<ProblemDto>>> getProblemListIfNotAssigned(@RequestParam(required = false, defaultValue = "1") Integer page,
+                                                                                        @RequestParam(required = false, defaultValue = "10") Integer size) {
+        Page<ProblemDto> pagedProblems = problemService.getPagedProblemIfNotAssigned(page, size);
         return ResponseEntity.ok(PagingResponse.success(pagedProblems));
     }
 }
