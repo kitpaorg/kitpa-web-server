@@ -181,8 +181,8 @@
                         정말로 시험을 종료하시겠습니까?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                        <button type="button" id="end-button" class="btn btn-danger">제출 후 종료</button>
                     </div>
                 </div>
             </div>
@@ -231,7 +231,7 @@
     }
 
     $(document).ready(() => {
-        $('#finish-exam').click(() => {
+        $('#end-button').click(() => {
             let finishForm = $('<form></form>');
             finishForm.attr("method", "post");
             finishForm.attr("action", /*[[@{/take/exam/submit}]]*/"");
@@ -297,7 +297,7 @@
         $('#time-remaining').text(`${h}:${String(m).padStart(2,"0")}:${String(s - 1).padStart(2, "0")}`);
         gap = gap - 1000;
         if(gap<= 0){
-            $('#finish-exam').trigger('click');
+            $('#end-button').trigger('click');
             clearInterval(interval);
         }
     }, 1000);

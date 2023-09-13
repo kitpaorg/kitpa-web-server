@@ -84,7 +84,7 @@ public class SecurityConfig {
                 .authenticationProvider(userAuthenticationProvider)
                 .antMatcher("/**")
                 .authorizeHttpRequests(re ->
-                        re.antMatchers("/css/**").permitAll()
+                        re.antMatchers("/css/**","/image/**").permitAll()
                         .anyRequest().hasRole("USER")
                 )
                 .formLogin(form ->
