@@ -29,7 +29,7 @@ public class MailToFileSaveService implements IMailService {
         String text = e.getText();
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))){
             bufferedWriter.newLine();
-            bufferedWriter.write(e.toString()+"\n");
+            bufferedWriter.write(text+"\n");
             bufferedWriter.flush();
         } catch (IOException ex) {
             log.error("file writer cannot open");
