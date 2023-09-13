@@ -294,7 +294,7 @@
 
         let s = Math.ceil(calc / 1000);
 
-        $('#time-remaining').text(`${h}:${m}:${s - 1}`);
+        $('#time-remaining').text(`${h}:${String(m).padStart(2,"0")}:${String(s - 1).padStart(2, "0")}`);
         gap = gap - 1000;
     }, 1000);
 
