@@ -60,11 +60,20 @@
                     <label for="answer" class="col-sm-2 col-form-label"
                     >답 입력</label
                     >
-                    <div>
+                    <div th:if="${!problem.type.name().toString().equals('MULTIPLE')}">
                         <input  th:value="${answer}"
                                 th:id="answer"
                                 name="answer"
                                 type="text"
+                                class="form-control"
+                                style="width: 400px"
+                        />
+                    </div>
+                    <div th:if="${problem.type.name().toString().equals('MULTIPLE')}">
+                        <input  th:value="${answer}"
+                                th:id="answer"
+                                name="answer"
+                                type="number"
                                 class="form-control"
                                 style="width: 400px"
                         />
