@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-@Profile("prod")
+//@Profile("prod")
 @Slf4j
 @RequiredArgsConstructor
-@Service
+//@Service
 public class SmtpMailService implements IMailService {
     private final JavaMailSender javaMailSender;
     @Override
