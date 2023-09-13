@@ -283,19 +283,23 @@
 
     let gap = endDate.getTime() - now.getTime();
 
-    setInterval(() => {
+    let interval = setInterval(() => {
         let calc = gap;
 
-        let h = Math.ceil(calc / (1000 * 60 * 60));
+        let h = Math.floor(calc / (1000 * 60 * 60));
         calc = calc % (1000 * 60 * 60);
 
-        let m = Math.ceil(calc / (1000 * 60));
+        let m = Math.floor(calc / (1000 * 60));
         calc = calc % (1000 * 60);
 
-        let s = Math.ceil(calc / 1000);
+        let s = Math.floor(calc / 1000);
 
         $('#time-remaining').text(`${h}:${String(m).padStart(2,"0")}:${String(s - 1).padStart(2, "0")}`);
         gap = gap - 1000;
+        if(gap<= 0){
+            $('#finish-exam').trigger('click');
+            clearInterval(interval);
+        }
     }, 1000);
 
     //문제 내용
