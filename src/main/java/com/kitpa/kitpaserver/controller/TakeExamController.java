@@ -189,7 +189,7 @@ public class TakeExamController {
         }else{
             model.addAttribute("error", "시험 시작 시간 전입니다.");
             model.addAttribute("enterActive", true);
-            return "/take-exam/take-exam-pre";
+            return "take-exam/take-exam-pre";
         }
     }
 }
