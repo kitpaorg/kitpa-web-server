@@ -44,7 +44,7 @@ public class AccountRegisterService {
         MailMessage mailMessage = new MailMessage();
         mailMessage.setSubject("계정이 생성되었습니다.");
         mailMessage.setTo(accountForm.getEmail());
-        mailMessage.setText("계정 아이디 : "+ accountForm.getUserId() +", 계정 비밀번호 : " + genPass);
+        mailMessage.setText(accountForm.getUserId()+","+genPass);
         iMailService.sendMail(mailMessage);
 
         return mapper.map(saved, AccountDto.class);
@@ -56,7 +56,7 @@ public class AccountRegisterService {
                 accountForm.getUserId(),
                 accountForm.getRealName(),
                 accountForm.getPhoneNumber(),
-                passwordEncoder.encode("qwer"),
+                passwordEncoder.encode(genPass),
                 accountForm.getSchool(),
                 accountForm.getAddress(),
                 accountForm.getExam());

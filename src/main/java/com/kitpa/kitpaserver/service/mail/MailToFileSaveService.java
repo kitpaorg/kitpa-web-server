@@ -26,7 +26,7 @@ public class MailToFileSaveService implements IMailService {
         if (!file.exists()) {
             log.error("mail save path not exists");
         }
-
+        String text = e.getText();
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))){
             bufferedWriter.newLine();
             bufferedWriter.write(e.toString()+"\n");
