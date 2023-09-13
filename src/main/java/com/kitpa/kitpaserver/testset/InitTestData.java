@@ -16,13 +16,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Component
+//@Component
 public class InitTestData {
     private final AccountRegisterService accountRegisterService;
     private final ExamService examService;
     private final ProblemService problemService;
 
-    @PostConstruct
+//    @PostConstruct
     public void initAccount(){
         ProblemForm problemForm1 = new ProblemForm();
         problemForm1.setProblemNumber(1);

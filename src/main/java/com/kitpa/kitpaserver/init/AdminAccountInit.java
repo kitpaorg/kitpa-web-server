@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 @RequiredArgsConstructor
-@Component
+//@Component
 public class AdminAccountInit {
     private final AdminAccountRepository adminAccountRepository;
 
     @Value("${admin.password}")
     private String uuid;
 
-    @PostConstruct
+//    @PostConstruct
     public void initializeAdminAccount() {
         AdminAccount adminAccount = new AdminAccount(uuid);
         adminAccountRepository.saveAndFlush(adminAccount);
