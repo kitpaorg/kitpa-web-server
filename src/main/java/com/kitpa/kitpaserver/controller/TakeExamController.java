@@ -143,6 +143,7 @@ public class TakeExamController {
                 //시험 준비 시간 후 일 때
                 if (exam.isReadyAfter(now)) {
                     TakeExamPreForm takeExamPreForm = new TakeExamPreForm();
+                    model.addAttribute("startDate", exam.getStartDate());
                     model.addAttribute("form", takeExamPreForm);
                     return "take-exam/take-exam-pre";
                 }

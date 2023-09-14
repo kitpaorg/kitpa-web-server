@@ -33,8 +33,26 @@
                 class="d-flex justify-content-center align-items-center p-5"
         >
             <div class="row justify-content-center align-items-center">
-                <h1 class="h3 mb-4 text-gray-800">Main Page</h1>
-
+                <div class="mb-5">
+                    <h1 class="h2 mb-4 text-gray-800">시험 정보</h1>
+                    <h3 class="h1 mb-4 text-gray-800" th:text="${exam.title}"></h3>
+                </div>
+                <div class="mb-5">
+                    <h1 class="h3 mb-4 text-gray-800">현재 접속한 계정</h1>
+                    <h5 th:text="${account.userId}"></h5>
+                </div>
+                <div class="mb-5">
+                    <h1 class="h3 mb-4 text-gray-800">시험 대기실 입장 시간</h1>
+                    <h5 th:text="${#temporals.format(exam.receiptIdleDate, 'yyyy/MM/dd HH:mm:ss')}"></h5>
+                </div>
+                <div class="mb-5">
+                    <h1 class="h3 mb-4 text-gray-800">시험 시작 시간</h1>
+                    <h5 th:text="${#temporals.format(exam.startDate, 'yyyy/MM/dd HH:mm:ss')}"></h5>
+                </div>
+                <div class="mb-5">
+                    <h1 class="h3 mb-4 text-gray-800">시험 종료 시간</h1>
+                    <h5 th:text="${#temporals.format(exam.endDate, 'yyyy/MM/dd HH:mm:ss')}"></h5>
+                </div>
                 <div>
                     <div class="card border-left-primary shadow h-100 py-2">
                         <div class="card-body">

@@ -29,7 +29,7 @@
         <!-- Main Content -->
         <div id="content" class="p-5">
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">시험 응시 사전 준비</h1>
+                <h1 class="h3 mb-0 text-gray-800">시험 응시 사전 준비 (<span id="time-remaining"></span>)</h1>
             </div>
             <p class="mb-5">시험 전 미리 아래 항목을 모두 입력 후 시험에 입장하시기 바랍니다. 모든 항목이 준비되어야 시험에 입장하실 수 있습니다.</p>
             <form th:object="${form}" name="form" id="form" th:action="@{/take/take-exam-pre}" method="post"
@@ -117,6 +117,18 @@
             }
         });
         $(document).ready(() => {
+            let startDateStr = /*[[${#temporals.format(startDate,'yyyy-MM-dd HH:mm:ss')}]]*/ '';
+            let start = new Date(startDateStr);
+            let now = new Date();
+            let gap = start.getTime() - now.getTime() + 1000;
+            let calc = gap;
+            let h = Math.floor(calc / (1000 * 60 * 60));
+            calc = calc % (1000 * 60 * 60);
+            let m = Math.floor(calc / (1000 * 60));
+            calc = calc % (1000 * 60);
+            let s = Math.floor(calc / 1000);
+            $('#time-remaining').text(`${h}:${String(m).padStart(2,"0")}:${String(s - 1).padStart(2, "0")}`);
+
 
             $("#screen-share").click(() => {
                 $("#screen-share-check").val("true");
@@ -158,7 +170,32 @@
                 $("#form").submit();
             })
         })
+        //남은 시간
+        let startDateStr = /*[[${#temporals.format(startDate,'yyyy-MM-dd HH:mm:ss')}]]*/ '';
+        let start = new Date(startDateStr);
+        let now = new Date();
 
+        let gap = start.getTime() - now.getTime();
+
+        let interval = setInterval(() => {
+            let calc = gap;
+
+            let h = Math.floor(calc / (1000 * 60 * 60));
+            calc = calc % (1000 * 60 * 60);
+
+            let m = Math.floor(calc / (1000 * 60));
+            calc = calc % (1000 * 60);
+
+            let s = Math.floor(calc / 1000);
+
+            $('#time-remaining').text(`${h}:${String(m).padStart(2,"0")}:${String(s - 1).padStart(2, "0")}`);
+            gap = gap - 1000;
+            if(gap<= 0){
+                $('#time-remaining').text('시험 진행 중');
+                $('#time-remaining').addClass('text-danger')
+                clearInterval(interval);
+            }
+        }, 1000);
     </script>
 </div>
 </body>
