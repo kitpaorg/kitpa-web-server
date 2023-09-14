@@ -60,10 +60,11 @@ public class AdminAccountController {
     @GetMapping("/list")
     public String accountListView(@RequestParam(required = false, defaultValue = "1") Integer page,
                                   @RequestParam(required = false, defaultValue = "10") Integer size,
+                                  @RequestParam(required = false, defaultValue = "") String search,
                                   Model model) {
-        Page<AccountDto> accountDtoPage = lookupService.getPagedAccounts(page - 1, size);
+        Page<AccountDto> accountDtoPage = lookupService.getPagedAccounts(page - 1, size, search);
         model.addAttribute("accounts", accountDtoPage);
-
+        model.addAttribute("search", search);
         injectPaging(model, accountDtoPage);
         return "account/account-list";
     }

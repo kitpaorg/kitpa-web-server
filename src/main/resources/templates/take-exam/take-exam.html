@@ -5,7 +5,13 @@
     <title>Kitpa | 시험 응시</title>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
             integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/go.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
             crossorigin="anonymous"></script>
@@ -18,6 +24,13 @@
           integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link th:href="@{/css/admin-front.css}" rel="stylesheet">
+
+    <style>
+        code.hljs {
+            background-color: rgba(255, 255, 255, 0); !important;
+        }
+    </style>
+
 </head>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -181,7 +194,7 @@
                         정말로 시험을 종료하시겠습니까?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                         <button type="button" id="end-button" class="btn btn-danger">제출 후 종료</button>
                     </div>
                 </div>
@@ -306,6 +319,8 @@
     document.getElementById('content').innerHTML = marked.parse(
         /*[[${problem.content}]]*/ ''
     );
+    hljs.highlightAll();
+
 </script>
 </body>
 </html>

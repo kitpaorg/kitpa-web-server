@@ -27,6 +27,8 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 </head>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -39,6 +41,11 @@
         <div id="content" class="p-5">
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">계정 목록</h1>
+            <div>
+                <input id="search" name="search" th:value="${search}" type="text">
+                <button id="search-btn" type="button" class="btn btn-primary">휴대폰번호 검색</button>
+            </div>
+
             <!-- Content Row -->
             <div class="row">
                 <div class="table-responsive">
@@ -101,7 +108,7 @@
                 <div>
                     <div th:if="${accounts.totalPages > 0}" class="d-inline"
                          th:each="pageNumber : ${pageNumbers}">
-                        <a th:href="@{/admin/accounts/list(size=${accounts.size}, page=${pageNumber})}"
+                        <a th:href="@{/admin/accounts/list(size=${accounts.size}, page=${pageNumber}, search=${search})}"
                            th:text="${pageNumber}"
                            th:class="${pageNumber==accounts.number + 1} ? active"></a>
                     </div>
@@ -111,6 +118,14 @@
     </div>
 </div>
 <th:block th:replace="~{common/script::logout}"></th:block>
+<script th:inline="javascript">
+    $("#search-btn").click(() => {
+            let search = $("#search").val();
+            let url = /*[[@{/admin/accounts/list(page=1, size=10)}]]*/"";
+            window.location.href=`${url}&search=${search}`;
+        }
+    )
+</script>
 </body>
 </html>
 

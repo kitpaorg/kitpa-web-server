@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Kitpa | 시험 상세 보기</title>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
@@ -19,7 +19,7 @@
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet"
     />
-    <link th:href="@{/css/admin-front.css}" rel="stylesheet" />
+    <link th:href="@{/css/admin-front.css}" rel="stylesheet"/>
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
@@ -27,7 +27,19 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/go.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        code.hljs {
+            background-color: rgba(255, 255, 255, 0); !important;
+        }
+    </style>
 </head>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -80,8 +92,8 @@
 </div>
 <th:block th:replace="~{common/script::logout}"></th:block>
 <script th:inline="javascript">
-        document.getElementById('content').innerHTML =
-            marked.parse(/*[[${problem.content}]]*/"");
+    document.getElementById('content').innerHTML = marked.parse(/*[[${problem.content}]]*/"");
+    hljs.highlightAll();
 </script>
 </body>
 </html>
