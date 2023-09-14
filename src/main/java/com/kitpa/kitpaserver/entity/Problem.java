@@ -51,4 +51,18 @@ public class Problem extends BaseTimeEntity {
     public void setExam(Exam exam) {
         this.exam = exam;
     }
+
+    public void update(Integer problemNumber,
+                       String title,
+                       Integer maxScore,
+                       ProblemType type,
+                       String answer,
+                       String content) {
+        this.problemNumber = problemNumber;
+        this.title = title;
+        this.maxScore = maxScore;
+        this.type = type;
+        this.answer = answer;
+        this.content = content;
+    }
 }

@@ -55,6 +55,8 @@
                             <th scope="col">타입</th>
                             <th scope="col">답</th>
                             <th scope="col">시험 할당 여부</th>
+                            <th scope="col">수정</th>
+                            <th scope="col">삭제</th>
                         </tr>
                         </thead>
 
@@ -83,6 +85,12 @@
                             <td>
                                 <p th:text="${problem.assigned}">6</p>
                             </td>
+                            <td>
+                                <a class="btn btn-warning" th:href="@{/admin/problems/update(id=${problem.id})}">수정</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" href="javascript:void(0)" th:onClick="getProblemDelete([[${problem.id}]])" >삭제</a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -100,6 +108,31 @@
     </div>
 </div>
 <th:block th:replace="~{common/script::logout}"></th:block>
+<script th:inline="javascript">
+    function getProblemDelete(selectNumber) {
+        let f = document.createElement('form');
+        f.setAttribute('method', 'post');
+        f.setAttribute('action', /*[[@{/admin/problems/delete}]]*/'');
+
+        let obj;
+        obj = document.createElement('input');
+        obj.setAttribute('type', 'hidden');
+        obj.setAttribute('name', 'id');
+        obj.setAttribute('value', selectNumber);
+
+        let obj2;
+        obj2 = document.createElement('input');
+        obj2.setAttribute('type', 'hidden');
+        obj2.setAttribute('name', /*[[${_csrf.parameterName}]]*/'');
+        obj2.setAttribute('value', /*[[${_csrf.token}]]*/'');
+
+        f.appendChild(obj);
+        f.appendChild(obj2);
+        document.body.appendChild(f);
+        f.submit();
+    }
+
+</script>
 </body>
 </html>
 

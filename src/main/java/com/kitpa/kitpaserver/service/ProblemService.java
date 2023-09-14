@@ -5,6 +5,7 @@ import com.kitpa.kitpaserver.entity.Exam;
 import com.kitpa.kitpaserver.entity.Problem;
 import com.kitpa.kitpaserver.exception.NotFoundException;
 import com.kitpa.kitpaserver.form.ProblemForm;
+import com.kitpa.kitpaserver.form.ProblemUpdateForm;
 import com.kitpa.kitpaserver.repository.ProblemRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,6 +25,18 @@ public class ProblemService {
         Problem problem = form.toEntity();
         Problem save = repository.save(problem);
         return mapper.map(save, ProblemDto.class);
+    }
+
+    @Transactional
+    public void updateProblem(ProblemUpdateForm form) {
+        Problem problem = repository.findById(form.getId())
+                .orElseThrow(NotFoundException::new);
+        problem.update(form.getProblemNumber(),
+                form.getTitle(),
+                form.getMaxScore(),
+                form.getType(),
+                form.getAnswer(),
+                form.getContent());
     }
 
     @Transactional

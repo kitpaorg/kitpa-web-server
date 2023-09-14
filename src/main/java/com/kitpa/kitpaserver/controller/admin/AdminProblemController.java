@@ -2,6 +2,7 @@ package com.kitpa.kitpaserver.controller.admin;
 
 import com.kitpa.kitpaserver.dto.ProblemDto;
 import com.kitpa.kitpaserver.form.ProblemForm;
+import com.kitpa.kitpaserver.form.ProblemUpdateForm;
 import com.kitpa.kitpaserver.service.ProblemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -53,9 +54,22 @@ public class AdminProblemController {
         return "redirect:/admin/problems/" + problemDto.getId() + "/detail";
     }
 
-    @PostMapping("/{id}/delete")
-    public String problemDelete(@PathVariable Long id) {
+    @GetMapping("/update")
+    public String problemUpdateView(@RequestParam Long id, Model model) {
+        ProblemDto problem = problemService.getProblem(id);
+        model.addAttribute("problem", problem);
+        return "problem/problem-update";
+    }
+
+    @PostMapping("/update")
+    public String problemUpdate(@ModelAttribute ProblemUpdateForm form) {
+        problemService.updateProblem(form);
+        return "redirect:/admin/problems/" + form.getId() + "/detail";
+    }
+
+    @PostMapping("/delete")
+    public String problemDelete(@RequestParam Long id) {
         problemService.deleteProblem(id);
-        return "problem/problem-list";
+        return "redirect:/admin/problems/list";
     }
 }
