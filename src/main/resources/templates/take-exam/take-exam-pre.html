@@ -127,7 +127,7 @@
             let m = Math.floor(calc / (1000 * 60));
             calc = calc % (1000 * 60);
             let s = Math.floor(calc / 1000);
-            $('#time-remaining').text(`${h}:${String(m).padStart(2,"0")}:${String(s - 1).padStart(2, "0")}`);
+            $('#time-remaining').text(`${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2, "0")}`);
 
 
             $("#screen-share").click(() => {
@@ -188,7 +188,7 @@
 
             let s = Math.floor(calc / 1000);
 
-            $('#time-remaining').text(`${h}:${String(m).padStart(2,"0")}:${String(s - 1).padStart(2, "0")}`);
+            $('#time-remaining').text(`${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2, "0")}`);
             gap = gap - 1000;
             if(gap<= 0){
                 $('#time-remaining').text('시험 진행 중');
