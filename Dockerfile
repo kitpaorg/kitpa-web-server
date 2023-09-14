@@ -14,4 +14,5 @@ ENV WHATAP ${WHATAP}
 RUN sed -i "1s/.*/${WHATAP}/g" /deploy/apm/whatap/whatap.conf
 
 ENV SPRING_OPTION=$SPRING_OPTION
-ENTRYPOINT exec java -javaagent:/deploy/apm/whatap/whatap.agent-2.2.16.jar -jar ${SPRING_OPTION} kitpa-server-0.1.jar
+ENV JAVA_OPTION=$JAVA_OPTION
+ENTRYPOINT exec java ${JAVA_OPTION} -javaagent:/deploy/apm/whatap/whatap.agent-2.2.16.jar -jar ${SPRING_OPTION} kitpa-server-0.1.jar
