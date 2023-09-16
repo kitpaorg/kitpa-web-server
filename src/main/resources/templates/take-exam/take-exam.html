@@ -70,6 +70,7 @@
 
             <form id="form" th:action="@{/take/exam}" method="post">
                 <div class="form-group">
+                    <input type="hidden"/>
                     <label for="answer" class="col-sm-2 col-form-label"
                     >답 입력</label
                     >
@@ -207,6 +208,13 @@
 <th:block th:replace="~{common/script::logout}"></th:block>
 
 <script th:inline="javascript">
+
+    $('input[name="answer"]').keydown(function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+        };
+    });
+
     function goProblemPost(selectNumber, problemNumber){
         let f = document.createElement('form');
         f.setAttribute('method', 'post');
