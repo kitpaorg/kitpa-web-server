@@ -35,7 +35,8 @@ public class TakeExamController {
     private final AccountLookupService accountLookupService;
 
     @GetMapping("/exam")
-    public String takeExamView(@CurrentUserId String userId, @RequestParam Integer problemNumber, Model model) {
+    public String takeExamView(@CurrentUserId String userId, @RequestParam(required = false, defaultValue = "1") Integer problemNumber, Model model) {
+        log.info("시험 접속 접속 체크, id={}, problemNumber={}", userId, problemNumber);
         if (!takeExamService.canEnterExam(userId)) {
             return "error/4xx";
         }
@@ -67,18 +68,22 @@ public class TakeExamController {
 
     @PostMapping("/exam")
     public String takeExam(@CurrentUserId String userId, @ModelAttribute SolveDto solveDto, RedirectAttributes redirectAttributes) {
+        log.info("시험 문제 제출 체크, userId={}, solveDto={}", userId, solveDto);
         if (!takeExamService.canSubmit(userId)) {
+            log.info("시험 문제 제출 못함 체크, userId={}, solveDto={}", userId, solveDto);
             return "redirect:/take/exam-finish";
         }
 
         takeExamService.submit(userId, solveDto);
 
         if (solveDto.getSelectNumber() != null) {
+            log.info("시험 문제 셀렉트 넘버, userId={}, solveDto={}", userId, solveDto);
             redirectAttributes.addAttribute("problemNumber", solveDto.getSelectNumber());
             return "redirect:/take/exam";
         }
 
         if (solveDto.getDirection() != null) {
+            log.info("시험 문제 다음 방향, userId={}, solveDto={}", userId, solveDto);
             if (solveDto.getDirection().equals("next")) {
                 redirectAttributes.addAttribute("problemNumber", solveDto.getProblemNumber() + 1);
             } else if (solveDto.getDirection().equals("prev")) {
@@ -86,12 +91,15 @@ public class TakeExamController {
             }
         }
 
+        log.info("시험 문제 아무 방향, 셀렉트 없음, userId={}, solveDto={}", userId, solveDto);
         return "redirect:/take/exam";
     }
 
     @PostMapping("/exam/submit")
     public String submitExam(@CurrentUserId String userId, @ModelAttribute SolveDto solveDto) {
+        log.info("시험 문제 submit 체크, userId={}, solveDto={}", userId, solveDto);
         if (!takeExamService.canSubmit(userId)) {
+            log.info("시험 문제 submit 못함 체크, userId={}, solveDto={}", userId, solveDto);
             return "redirect:/take/exam-finish";
         }
 
@@ -129,6 +137,7 @@ public class TakeExamController {
                     //시험을 마치지 않은 상태일 때
                     else {
                         //재입장 처리
+                        log.info("시험 시간 재입장 처리됨, userId={}", userId);
                         return "redirect:/take/exam?problemNumber=1";
                     }
                 }
@@ -149,12 +158,14 @@ public class TakeExamController {
                 }
                 //시험 준비 시간 전 일 때
                 else {
+                    log.info("시험 준비 시간 전 입장, userId={}", userId);
                     return "error/cannot-enter-idle";
                 }
             }
         }
         //시험 시간이 끝난 후 일 때
         else{
+            log.info("시험 시간 끝난 상태, userId={}", userId);
             return "error/not-exists-exam";
         }
         //시험 시작 전 일때

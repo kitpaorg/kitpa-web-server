@@ -3,6 +3,7 @@ package com.kitpa.kitpaserver.security;
 import com.kitpa.kitpaserver.entity.Account;
 import com.kitpa.kitpaserver.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 public class RoleUserDetailsService implements UserDetailsService {
     private final AccountRepository accountRepository;
@@ -39,6 +41,7 @@ public class RoleUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        log.info("logged in userId={}", userId);
         Account account = accountRepository.findByUserId(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("Account not found by userId : " + userId));
         return new User(
